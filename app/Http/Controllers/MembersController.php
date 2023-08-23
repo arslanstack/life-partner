@@ -45,7 +45,7 @@ class MembersController extends Controller
         $bodyTypeMap = [
             "Small" => 0,
             "Average" => 1,
-            "Athletic" => 2,
+            "Aethletic" => 2,
             "Large" => 3,
         ];
 
