@@ -40,6 +40,7 @@
                 </div>
             </div>
         </div>
+        <!-- User cards are generated over here -->
         <div class="row" id="user-cards-container">
             @foreach($users as $user)
             <div class="col-lg-4 col-md-6">
@@ -70,8 +71,8 @@
                 </div>
             </div>
             @endforeach
-
         </div>
+        <!-- Pagination Buttons are here -->
         <div class="row" id="pagelinks">
             <div class="col-lg-12">
                 <div class="d-flex justify-content-center">
@@ -138,9 +139,9 @@
                             </div>
                             <div class="col-6">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="interestedin" id="Sugar Babby (Trans)" value="Sugar Babby (Trans)">
-                                    <label class="form-check-label" for="Sugar Babby (Trans)">
-                                        Sugar Babby (Trans)
+                                    <input class="form-check-input" type="radio" name="interestedin" id="Sugar Baby (Trans)" value="Sugar Baby (Trans)">
+                                    <label class="form-check-label" for="Sugar Baby (Trans)">
+                                        Sugar Baby (Trans)
                                     </label>
                                 </div>
                             </div>
