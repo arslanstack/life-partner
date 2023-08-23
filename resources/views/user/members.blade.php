@@ -333,6 +333,7 @@
         </div>
     </div>
 </div>
+<!-- Slider Handling JS scripts -->
 <script>
     function showHeightSlider(elm) {
         if (elm.checked) {
@@ -521,6 +522,7 @@
         childrenSliderTrack.style.background = `linear-gradient(to right, #dadae5 ${percent1}%, #3264fe ${percent1}%, #3264fe ${percent2}%, #dadae5 ${percent2}%)`;
     }
 </script>
+<!-- Google places scripts -->
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <script>
     function initMap() {
@@ -570,19 +572,14 @@
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBy2l4KGGTm4cTqoSl6h8UAOAob87sHBsA&libraries=places&callback=initMap" async defer></script>
-<script>
-    function checkLocation() {
-        document.getElementById("searchByLocation").checked = true;
-        console.log('checked');
-    }
-</script>
+<!--  Sorting Re routing from select -->
 <script>
     function reRoute(elm) {
         window.location = elm.value;
     }
 </script>
 
-
+<!-- Ajax request, Save search filter history, On reload logic, On Close and reopen logic etc -->
 <script>
     $(document).ready(function() {
         if (performance.navigation.type === 1) {

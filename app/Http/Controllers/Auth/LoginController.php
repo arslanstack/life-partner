@@ -46,6 +46,12 @@ class LoginController extends Controller
         // Attempt to authenticate the user
         if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
             // update last login for user
+            // if user status is 0 (blocked) then logout and redirect to login page with error message
+            if (Auth::user()->status == 0) {
+                Auth::logout();
+                return redirect()->route('login')
+                    ->with('error', 'Your account has been blocked. Please contact administrator.');
+            }
             $user = Auth::user();
             $user->last_login = date('Y-m-d H:i:s');
             $user->save();
