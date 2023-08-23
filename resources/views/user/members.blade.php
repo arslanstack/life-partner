@@ -585,6 +585,11 @@
 
 <script>
     $(document).ready(function() {
+        if (performance.navigation.type === 1) {
+            // Page was reloaded, do nothing with localStorage
+        } else {
+            localStorage.clear();
+        }
         $('#user-cards-container').addClass('d-none');
         $('#pagelinks').addClass('d-none');
         // Repopulate search form with stored data on page load
@@ -698,16 +703,15 @@
                     console.error(error);
                 }
             });
-        }
-        else{
+        } else {
             $('#pagelinks').removeClass('d-none');
         }
         setTimeout(() => {
             $('#user-cards-container').removeClass('d-none');
         }, "600");
-        
 
     });
 </script>
+
 
 @endsection
