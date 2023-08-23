@@ -61,12 +61,12 @@
                         <a href="/members" class="">Members</a>
                     </li>
                     <li>
-                        <a href="/home" class="">Home</a>
+                        <a href="/home" onclick="localStorage.clear();" class="">Home</a>
                     </li>
 
                     @if(Auth::check())
                     <li>
-                        <a href="/profile">Profile</a>
+                        <a href="/profile" onclick="localStorage.clear();">Profile</a>
                     </li>
                     @else
                     <li>
@@ -163,10 +163,10 @@
                             @if (Route::has('login'))
                             @auth
                             <li>
-                                <a href="{{ url('/profileSettings') }}">Settings</a>
+                                <a href="{{ url('/profileSettings') }}" onclick="localStorage.clear();">Settings</a>
                             </li>
                             <li>
-                                <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); localStorage.clear();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
