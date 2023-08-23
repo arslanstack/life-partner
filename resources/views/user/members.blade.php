@@ -389,7 +389,6 @@
 
     // Function to update height slider values
     function slideOne() {
-        document.getElementById("height").checked = true;
         if (parseInt(sliderTwo.value) - parseInt(sliderOne.value) <= minGap) {
             sliderOne.value = parseInt(sliderTwo.value) - minGap;
         }
@@ -398,7 +397,6 @@
     }
 
     function slideTwo() {
-        document.getElementById("height").checked = true;
 
         if (parseInt(sliderTwo.value) - parseInt(sliderOne.value) <= minGap) {
             sliderTwo.value = parseInt(sliderOne.value) + minGap;
@@ -416,6 +414,8 @@
 
         sliderTrack.style.background = `linear-gradient(to right, #dadae5 ${percent1}%, #3264fe ${percent1}%, #3264fe ${percent2}%, #dadae5 ${percent2}%)`;
     }
+
+
 
     let heightSlider1 = document.getElementById("heightSlider1");
     let heightSlider2 = document.getElementById("heightSlider2");
@@ -708,7 +708,7 @@
         }
         setTimeout(() => {
             $('#user-cards-container').removeClass('d-none');
-        }, "600");
+        }, "500");
 
     });
 </script>
