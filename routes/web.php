@@ -36,9 +36,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/members', [App\Http\Controllers\MembersController::class, 'index'])->name('members');
     Route::get('/membersLatestActive', [App\Http\Controllers\MembersController::class, 'sortActive'])->name('membersLatestActive');
     Route::get('/membersNew', [App\Http\Controllers\MembersController::class, 'sortNew'])->name('membersNew');
-    Route::post('/advancedSearch', [App\Http\Controllers\MembersController::class, 'search'])->name('advancedSearch');
+    // Route::post('/advancedSearch', [App\Http\Controllers\MembersController::class, 'search'])->name('advancedSearch');
+    
+    
+    Route::get('/search', [App\Http\Controllers\MembersController::class, 'search'])->name('search');
+    Route::get('/loadSearchCards', [App\Http\Controllers\MembersController::class, 'loadSearchCards'])->name('loadSearchCards');
+    Route::get('/getUsers', [App\Http\Controllers\MembersController::class, 'getUsers'])->name('getUsers');
 
-    Route::get('/member/{username}', [App\Http\Controllers\MembersController::class, 'getMember'])->name('user.getMember');
+    // Route::get('/member/{username}', [App\Http\Controllers\MembersController::class, 'getMember'])->name('user.getMember');
 });
 
 

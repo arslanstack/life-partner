@@ -5748,6 +5748,32 @@ input[type=submit] {
   background-image: linear-gradient(166deg, rgb(242, 40, 118) 0%, rgb(148, 45, 217) 100%);
   color: #fff;
 }
+.search-pagination-area {
+  font-size: 18px;
+  margin: 0 -15px;
+}
+.search-pagination-area a {
+  color: #333;
+  margin: 0 2px;
+  background: #fff;
+  -webkit-box-shadow: 0px 15px 30px 0px rgba(119, 123, 146, 0.2);
+          box-shadow: 0px 15px 30px 0px rgba(119, 123, 146, 0.2);
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  border-radius: 50%;
+}
+.search-pagination-area a i {
+  font-size: 14px;
+}
+.search-pagination-area a:hover {
+  color: #ffffff;
+}
+.search-pagination-area a.active, .search-pagination-area a:hover {
+  background-image: -o-linear-gradient(284deg, rgb(242, 40, 118) 0%, rgb(148, 45, 217) 100%);
+  background-image: linear-gradient(166deg, rgb(242, 40, 118) 0%, rgb(148, 45, 217) 100%);
+  color: #fff;
+}
 
 .single-community-menu {
   background: #4827bb;
