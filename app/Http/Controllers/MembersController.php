@@ -105,7 +105,6 @@ class MembersController extends Controller
 
     public function loadSearchCards(Request $request)
     {
-        return response()->json(['searchParams in controller are' => $request->input('searchParams', [])]);
         $searchParams = $request->input('searchParams', []);
         $age = $minAge = $maxAge =  $maxHeight = $minHeight = $maxWeight = $minWeight = $maxChildren = $minChildren = $lng = $lat = $distance =  $height = $weight =  $children =  $searchByLocation = null;
         $bodyTypeMap = [
