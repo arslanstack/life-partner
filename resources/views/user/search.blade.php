@@ -561,11 +561,59 @@
         window.location = elm.value;
     }
 </script>
-
 <script>
-    // if (performance.navigation.type === 1) {} else {
-    //     localStorage.clear();
-    // }
+    var ENDPOINT = "{{ route('search') }}" + window.location.search;
+    var isLoading = false;
+    var currentPage = 1;
+
+    $(window).scroll(function() {
+        var container = $("#user-cards-container");
+        var containerHeight = container.height();
+        var scrollTop = $(window).scrollTop();
+        var windowHeight = $(window).height();
+
+        if (!isLoading && scrollTop + windowHeight >= container.offset().top + containerHeight - 20) {
+            currentPage++;
+            infinteLoadMore(currentPage);
+        }
+    });
+
+    function infinteLoadMore(page) {
+        console.log("Current Page: " + currentPage);
+        console.log("Constructed URL: " + ENDPOINT + "?page=" + currentPage);
+        isLoading = true;
+        $.ajax({
+                url: ENDPOINT + "?page=" + page,
+                datatype: "html",
+                type: "get",
+                beforeSend: function() {
+                    $('.auto-load').show();
+                }
+            })
+            .done(function(response) {
+                if (response.html == '') {
+                    $('.auto-load').html("No more data to display.");
+                    console.log("No more data to display.");
+                    isLoading = false;
+                    return;
+                }
+
+                $('.auto-load').hide();
+                $("#user-cards-container").append(response.html);
+                // console.log("response: " + response.html);
+
+                isLoading = false;
+            })
+            .fail(function(jqXHR, ajaxOptions, thrownError) {
+                $('.auto-load').html("No more data to display.");
+                console.log("No more data to display.");
+                isLoading = false;
+                return;
+            });
+    }
+</script>
+<script>
+    
     $(document).ready(function() {
         $("#resetBtn").click(function() {
             localStorage.clear();
@@ -648,55 +696,5 @@
         });
     });
 </script>
-<script>
-    var ENDPOINT ="{{ route('members') }}";
-    console.log("endpoint is: " + ENDPOINT);
-    var page = 1;
-    var isLoading = false;
-    $(window).scroll(function() {
-        var container = $("#user-cards-container");
-        var containerHeight = container.height();
-        var scrollTop = $(window).scrollTop();
-        var windowHeight = $(window).height();
 
-        if (!isLoading && scrollTop + windowHeight >= container.offset().top + containerHeight - 20) {
-            page++;
-            infinteLoadMore(page);
-        }
-    });
-
-
-    /*------------------------------------------
-    --------------------------------------------
-    call infinteLoadMore()
-    --------------------------------------------
-    --------------------------------------------*/
-    function infinteLoadMore(page) {
-        isLoading = true;
-        $.ajax({
-                url: ENDPOINT + "?page=" + page,
-                datatype: "html",
-                type: "get",
-                beforeSend: function() {
-                    $('.auto-load').show();
-                }
-            })
-            .done(function(response) {
-                console.log("response recieved: " + response.html);
-                if (response.html == '') {
-                    $('.auto-load').html("We don't have more data to display :(");
-                    return;
-                    isLoading = false;
-                }
-
-                $('.auto-load').hide();
-                $("#user-cards-container").append(response.html);
-                isLoading = false;
-            })
-            .fail(function(jqXHR, ajaxOptions, thrownError) {
-                console.log('Server error occured');
-                isLoading = false;
-            });
-    }
-</script>
 @endsection

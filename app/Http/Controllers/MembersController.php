@@ -19,39 +19,6 @@ class MembersController extends Controller
         }
         return view('user.members', ['users' => $users]);
     }
-    public function getUsers(Request $request)
-    {
-
-
-        $users = User::where('id', '!=', Auth::id())->where('status', '!=', 0)->paginate(9);
-
-        if ($request->ajax()) {
-
-            $cardsHtml = view('user.member_card', ['users' => $users])->render();
-
-            // Problem/Bug/Issue is from this line onwards and returning 500 error
-            $paginationHtml = $this->buildPaginationHtml($users);
-
-
-            return response()->json(['cardsHtml' => $cardsHtml, 'paginationHtml' => $paginationHtml]);
-        }
-
-        return view('user.member_card', ['users' => $users]);
-    }
-    public function sortActive()
-    {
-        // Get all users except the authenticated user and those who have status 0 where last_login latest
-        $users = User::where('id', '!=', Auth::id())->where('status', '!=', 0)->orderBy('last_login', 'desc')->paginate(9);
-        return view('user.members', ['users' => $users]);
-    }
-    public function sortNew()
-    {
-        // Get all users except the authenticated user and those who have status 0 where created latest
-        $users = User::where('id', '!=', Auth::id())->where('status', '!=', 0)->orderBy('created_at', 'desc')->paginate(9);
-        return view('user.members', ['users' => $users]);
-    }
-
-
     public function search(Request $request)
     {
         $query = User::query()
@@ -111,11 +78,30 @@ class MembersController extends Controller
                 ->whereBetween('longitude', [$locationBorders['lng_min'], $locationBorders['lng_max']]);
         }
         $users = $query->paginate(9);
+
         if ($request->ajax()) {
+            if($request->session()->has('currentPage')){
+                $page = $request->session()->get('currentPage') + 1;
+                $request->session()->put('currentPage', $page);
+            }
+            $users = $query->paginate(9, ['*'], 'page', $request->session()->get('currentPage'));
             $view = view('user.member_card', compact('users'))->render();
             return response()->json(['html' => $view]);
         }
-        $users->appends(request()->query());
+        $request->session()->put('currentPage', 1);
+        return view('user.search', ['users' => $users]);
+    }
+
+    public function sortActive()
+    {
+        // Get all users except the authenticated user and those who have status 0 where last_login latest
+        $users = User::where('id', '!=', Auth::id())->where('status', '!=', 0)->orderBy('last_login', 'desc')->paginate(9);
+        return view('user.members', ['users' => $users]);
+    }
+    public function sortNew()
+    {
+        // Get all users except the authenticated user and those who have status 0 where created latest
+        $users = User::where('id', '!=', Auth::id())->where('status', '!=', 0)->orderBy('created_at', 'desc')->paginate(9);
         return view('user.members', ['users' => $users]);
     }
     public function getMember(Request $request)
