@@ -563,9 +563,7 @@
 </script>
 
 <script>
-    // if (performance.navigation.type === 1) {} else {
-    //     localStorage.clear();
-    // }
+    
     $(document).ready(function() {
         $("#resetBtn").click(function() {
             localStorage.clear();
@@ -649,10 +647,13 @@
     });
 </script>
 <script>
-    var ENDPOINT ="{{ route('members') }}";
+    var ENDPOINT = "{{ request()->is('search*') ? '' : route('members') }}";
+    if (ENDPOINT === '') {
+        ENDPOINT = "{{ route('search') }}" + window.location.search;
+    }
     console.log("endpoint is: " + ENDPOINT);
-    var page = 1;
     var isLoading = false;
+    var currentPage = 1;
     $(window).scroll(function() {
         var container = $("#user-cards-container");
         var containerHeight = container.height();
@@ -660,8 +661,8 @@
         var windowHeight = $(window).height();
 
         if (!isLoading && scrollTop + windowHeight >= container.offset().top + containerHeight - 20) {
-            page++;
-            infinteLoadMore(page);
+            currentPage++;
+            infinteLoadMore(currentPage);
         }
     });
 
@@ -672,6 +673,7 @@
     --------------------------------------------
     --------------------------------------------*/
     function infinteLoadMore(page) {
+        console.log("Constructed URL: " + ENDPOINT + "?page=" + currentPage);
         isLoading = true;
         $.ajax({
                 url: ENDPOINT + "?page=" + page,
@@ -694,8 +696,10 @@
                 isLoading = false;
             })
             .fail(function(jqXHR, ajaxOptions, thrownError) {
-                console.log('Server error occured');
+                $('.auto-load').html("No more data to display.");
+                console.log("No more data to display.");
                 isLoading = false;
+                return;
             });
     }
 </script>

@@ -89,7 +89,7 @@ class MembersController extends Controller
             return response()->json(['html' => $view]);
         }
         $request->session()->put('currentPage', 1);
-        return view('user.search', ['users' => $users]);
+        return view('user.members', ['users' => $users]);
     }
 
     public function sortActive()
