@@ -9,11 +9,14 @@ use App\Models\User;
 
 class MembersController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // Get all users except the authenticated user and those who have status 0 (blocked)
         $users = User::where('id', '!=', Auth::id())->where('status', '!=', 0)->paginate(9);
-        
+        if ($request->ajax()) {
+            $view = view('user.member_card', compact('users'))->render();
+            return response()->json(['html' => $view]);
+        }
         return view('user.members', ['users' => $users]);
     }
     public function getUsers(Request $request)
@@ -108,6 +111,10 @@ class MembersController extends Controller
                 ->whereBetween('longitude', [$locationBorders['lng_min'], $locationBorders['lng_max']]);
         }
         $users = $query->paginate(9);
+        if ($request->ajax()) {
+            $view = view('user.member_card', compact('users'))->render();
+            return response()->json(['html' => $view]);
+        }
         $users->appends(request()->query());
         return view('user.members', ['users' => $users]);
     }

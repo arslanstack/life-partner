@@ -51,51 +51,15 @@
             </div>
         </div>
         <div class="row" id="user-cards-container">
-            <!-- Implement logic to display user cards here -->
-            @foreach ($users as $user)
-            <div class="col-lg-4 col-md-6">
-                <div class="single-community-box">
-                    <div class="img">
-                        <img src="{{asset('uploads/' . ($user->profile_image ?? 'avatar.jpg'))}}" style="width: 360px; height: 360px;" alt="">
-                    </div>
-                    <div class="content">
-                        <p class="date" style="height: 28px;">
-                            @if($user->show_last_login === 1)
-                            Last active: @php
-                            $datetime = \Carbon\Carbon::createFromDate($user->last_login);
-                            echo $datetime->diffForHumans();
-                            @endphp
-                            @endif
-                        </p>
-                        <a href="member/{{$user->username}}" class="title">
-                            {{$user->first_name . ' ' . $user->last_name}}
-                            <br>
-                            <small><strong style="color: blue;"> {{$user->iam}}</strong></small>
-                        </a>
-                    </div>
-                    <div class="box-footer">
-                        <a href="member/{{$user->username}}" class="btn btn-sm btn-primary bg-grad">View Profile</a>
-                        <a href="member/like/{{$user->username}}" class="btn btn-sm btn-success bg-grad2">Like Profile</a>
-                        <a href="member/report/{{$user->username}}" class="btn btn-sm btn-danger">Report Profile</a>
-                    </div>
-                </div>
-            </div>
-            @endforeach
+            @include('user.member_card')
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="row pagination text-center" id="pagination-area">
-                    {{ $users->links() }}
-                </div>
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="row pagination" id="search-pagination-area">
-
-                </div>
-            </div>
+        <!-- Data Loader -->
+        <div class="auto-load text-center" style="display: none;">
+            <svg version="1.1" id="L9" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="60" viewBox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve">
+                <path fill="#000" d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50">
+                    <animateTransform attributeName="transform" attributeType="XML" type="rotate" dur="1s" from="0 50 50" to="360 50 50" repeatCount="indefinite" />
+                </path>
+            </svg>
         </div>
     </div>
 </section>
@@ -350,6 +314,7 @@
         </div>
     </div>
 </div>
+
 <!-- Slider Handling JS scripts -->
 <script>
     function showHeightSlider(elm) {
@@ -541,6 +506,7 @@
 </script>
 <!-- Google places scripts -->
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
 <script>
     function initMap() {
         const input = document.getElementById('address');
@@ -681,5 +647,60 @@
             $('#search-form').submit();
         });
     });
+</script>
+<script>
+    var ENDPOINT = "{{ request()->is('search*') ? '' : route('members') }}";
+    if (ENDPOINT === '') {
+        ENDPOINT = window.location.href;
+    }
+    
+    var page = 1;
+    var isLoading = false;
+    console.log(ENDPOINT);
+    $(window).scroll(function() {
+        var container = $("#user-cards-container");
+        var containerHeight = container.height();
+        var scrollTop = $(window).scrollTop();
+        var windowHeight = $(window).height();
+
+        if (!isLoading && scrollTop + windowHeight >= container.offset().top + containerHeight - 20) {
+            page++;
+            infinteLoadMore(page);
+        }
+    });
+
+
+    /*------------------------------------------
+    --------------------------------------------
+    call infinteLoadMore()
+    --------------------------------------------
+    --------------------------------------------*/
+    function infinteLoadMore(page) {
+        isLoading = true;
+        $.ajax({
+                url: ENDPOINT + "?page=" + page,
+                datatype: "html",
+                type: "get",
+                beforeSend: function() {
+                    $('.auto-load').show();
+                }
+            })
+            .done(function(response) {
+                console.log("response recieved: " + response.html);
+                if (response.html == '') {
+                    $('.auto-load').html("We don't have more data to display :(");
+                    return;
+                    isLoading = false;
+                }
+
+                $('.auto-load').hide();
+                $("#user-cards-container").append(response.html);
+                isLoading = false;
+            })
+            .fail(function(jqXHR, ajaxOptions, thrownError) {
+                console.log('Server error occured');
+                isLoading = false;
+            });
+    }
 </script>
 @endsection
