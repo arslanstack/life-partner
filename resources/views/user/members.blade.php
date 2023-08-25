@@ -52,11 +52,40 @@
         </div>
         <div class="row" id="user-cards-container">
             <!-- Implement logic to display user cards here -->
+            @foreach ($users as $user)
+            <div class="col-lg-4 col-md-6">
+                <div class="single-community-box">
+                    <div class="img">
+                        <img src="{{asset('uploads/' . ($user->profile_image ?? 'avatar.jpg'))}}" style="width: 360px; height: 360px;" alt="">
+                    </div>
+                    <div class="content">
+                        <p class="date" style="height: 28px;">
+                            @if($user->show_last_login === 1)
+                            Last active: @php
+                            $datetime = \Carbon\Carbon::createFromDate($user->last_login);
+                            echo $datetime->diffForHumans();
+                            @endphp
+                            @endif
+                        </p>
+                        <a href="member/{{$user->username}}" class="title">
+                            {{$user->first_name . ' ' . $user->last_name}}
+                            <br>
+                            <small><strong style="color: blue;"> {{$user->iam}}</strong></small>
+                        </a>
+                    </div>
+                    <div class="box-footer">
+                        <a href="member/{{$user->username}}" class="btn btn-sm btn-primary bg-grad">View Profile</a>
+                        <a href="member/like/{{$user->username}}" class="btn btn-sm btn-success bg-grad2">Like Profile</a>
+                        <a href="member/report/{{$user->username}}" class="btn btn-sm btn-danger">Report Profile</a>
+                    </div>
+                </div>
+            </div>
+            @endforeach
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <div class="row pagination" id="pagination-area">
-
+                <div class="row pagination text-center" id="pagination-area">
+                    {{ $users->links() }}
                 </div>
 
             </div>
@@ -80,8 +109,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="search-form">
-                    @csrf
+                <form id="search-form" action="search" method="GET">
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Interested in: </label>
                         <div class="row">
@@ -315,8 +343,8 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="custom-button3" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="custom-button">Search</button>
+                <button type="button" class="custom-button3" id="resetBtn">Clear Form</button>
+                <button type="button" id="formSubmitBtn" class="custom-button">Search</button>
                 </form>
             </div>
         </div>
@@ -569,16 +597,22 @@
 </script>
 
 <script>
+    // if (performance.navigation.type === 1) {} else {
+    //     localStorage.clear();
+    // }
     $(document).ready(function() {
-        if (performance.navigation.type === 1) {
-            // Page was reloaded, do nothing with localStorage
-        } else {
+        $("#resetBtn").click(function() {
             localStorage.clear();
-        }
+            $('#search-form').trigger("reset");
+            $('#ageSlider').addClass('d-none');
+            $('#heightSlider').addClass('d-none');
+            $('#weightSlider').addClass('d-none');
+            $('#childSlider').addClass('d-none');
+            $('#locationSection').addClass('d-none');
+        });
         var storedSearchParams = localStorage.getItem('searchParameters');
         if (storedSearchParams) {
             var formData = JSON.parse(storedSearchParams);
-            loadSearchCards(1);
             formData.forEach(function(item) {
                 var inputField = $('[name="' + item.name + '"]');
                 if (item.name === 'age') {
@@ -640,81 +674,12 @@
                 $('[name="interestedin"][value="' + interestedinValue.value + '"]').prop('checked', true);
             }
 
-        } else {
-            loadUserCards(1); // Load user cards for the first page when the page loads
-            console.log("Unit test 1");
         }
-
-        function loadUserCards(page) {
-            $.ajax({
-                url: "{{ route('getUsers') }}",
-                type: 'GET',
-                data: {
-                    page: page
-                },
-                // Pass the page number to the server
-                success: function(response) {
-                    console.log("Unit test 2");
-                    $('#user-cards-container').html(response.cardsHtml); // Replace user cards
-                    $('#pagination-area').html(response.paginationHtml);
-                },
-                error: function(error) {
-                    console.log("Unit test 3");
-                    console.error(error);
-                }
-            });
-        }
-        $('#pagination-area').on('click', 'a', function(event) {
-            console.log("pagination area touched");
-            event.preventDefault();
-            const page = $(this).attr('href').split('=')[1];
-            loadUserCards(page);
-        });
-
-        // For search results pagination
-        $('#search-pagination-area').on('click', 'a', function(event) {
-            event.preventDefault();
-            const page = $(this).attr('href').split('=')[1];
-            loadSearchCards(page);
-        });
-
-        function loadSearchCards(page) {
-            var storedSearchParams = localStorage.getItem('searchParameters');
-            var searchParams = storedSearchParams ? JSON.parse(storedSearchParams) : [];
-
-            $.ajax({
-                url: "{{ route('loadSearchCards') }}",
-                type: 'GET',
-                data: {
-                    page: page,
-                    searchParams: searchParams
-                },
-                success: function(response) {
-                    $('#user-cards-container').html(response.cardsHtml); // Replace user cards
-                    $('#search-pagination-area').html(response.paginationHtml);
-                    $('#pagination-area').remove();
-                    $('#exampleModal').modal('hide');
-                    // var searchUrl = "{{ route('members') }}" + "?" + $.param(searchParams);
-                    // history.pushState(null, null, searchUrl);
-                },
-                error: function(error) {
-                    console.error(error);
-                }
-            });
-        }
-        $('#search-form').submit(function(event) {
-            event.preventDefault(); // Prevent form submission
-
-            // Collect form data
-            var formData = $(this).serializeArray();
+        $('#formSubmitBtn').click(function(event) {
+            var formData = $('#search-form').serializeArray();
             localStorage.setItem('searchParameters', JSON.stringify(formData));
-            // Send AJAX request
-            loadSearchCards(1);
+            $('#search-form').submit();
         });
-
-
-
-
     });
 </script>
 @endsection
