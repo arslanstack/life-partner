@@ -85,7 +85,7 @@ $userdata = ProfileData(Auth::id());
                     <li class="user-profile">
                         <a href="#">
                             @auth
-                            <img style="width: 40px; height: 40px; border-radius: 100%;" src="{{asset('uploads/' . ($userdata['profile_image'] ?? 'avatar.jpg'))}}" alt="">
+                            <img style="width: 40px; height: 40px; border-radius: 100%;" src="{{asset('uploads/' . ($userdata->profile_image ?? 'avatar.jpg'))}}" alt="">
                             @else
                             <img style="width: 40px; height: 40px; border-radius: 100%;" src="assets/images/user-demo.png" alt="">
                             @endauth
@@ -158,20 +158,20 @@ $userdata = ProfileData(Auth::id());
                             <div class="top-bg"></div>
                             <div class="p-inner-content">
                                 <div class="profile-img">
-                                    <img src="{{asset('uploads/' . ($userdata['profile_image'] ?? 'avatar.jpg'))}}" style="width: 120px; height: 120px; border-radius: 100%;" alt="">
+                                    <img src="{{asset('uploads/' . ($userdata->profile_image ?? 'avatar.jpg'))}}" style="width: 120px; height: 120px; border-radius: 100%;" alt="">
                                     <div class="active-online"></div>
                                 </div>
                                 <h5 class="name">
-                                    {{($userdata['first_name'] ?? 'First Name') . ' ' . ($userdata['last_name'] ?? 'Last Name')}}
+                                {{($userdata->first_name ?? 'First Name') . ' ' . ($userdata->last_name ?? 'Last Name')}}
                                 </h5>
                                 <ul class="p-b-meta-one">
                                     <li>
                                         <span>
-                                            {{($userdata['age'] ?? 'Your Age')}}
+                                            {{($userdata->age ?? 'Your Age')}}
                                         </span>
                                     </li>
                                     <li>
-                                        <span> <i class="fas fa-map-marker-alt"></i>{{($userdata['city'] ?? 'City')}}, {{($userdata['country'] ?? 'Country')}}</span>
+                                        <span> <i class="fas fa-map-marker-alt"></i>{{($userdata->city ?? 'City')}}, {{($userdata->country ?? 'Country')}}</span>
                                     </li>
                                 </ul>
                                 <div class="p-b-meta-two">

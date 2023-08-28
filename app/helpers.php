@@ -23,7 +23,7 @@ if (!function_exists('checkPendingApproval')) {
         $userdata = ProfileChangeLog::where('user_id', $userID)->latest()->first();
         if ($userdata) {
             if ($userdata->status == 'pending') {
-                $userdata = json_decode($userdata->profile_data, true);
+                $userdata = json_decode($userdata->profile_data);
                 return $userdata;
             } else {
                 $userdata = User::find($userID);

@@ -37,7 +37,7 @@ $userdata = ProfileData(Auth::id());
                     <div class="profile-img">
                         <form action="editProfile" method="post" enctype="multipart/form-data">
                             @csrf
-                            <label for="dp"><img src="{{asset('uploads/' . ($userdata['profile_image'] ?? 'avatar.jpg'))}}" id="dpShowLabel" style="width: 120px; height: 120px; border-radius: 100%;" alt=""></label>
+                            <label for="dp"><img src="{{asset('uploads/' . ($userdata->profile_image ?? 'avatar.jpg'))}}" id="dpShowLabel" style="width: 120px; height: 120px; border-radius: 100%;" alt=""></label>
                             <input type="file" id="dp" name="profile_image" class="visually-hidden" accept="image/*" hidden onchange="imageName(this)">
                             <div class="active-online"></div>
                     </div>
@@ -72,35 +72,35 @@ $userdata = ProfileData(Auth::id());
                 <div class="col-md-6">
                     <div class="my-input-box">
                         <label for="">First Name</label>
-                        <input type="text" class="form-control" id="name" name="first_name" value="{{$userdata['first_name']}}">
+                        <input type="text" class="form-control" id="name" name="first_name" value="{{$userdata->first_name}}">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="my-input-box">
                         <label for="">Last Name</label>
-                        <input type="text" class="form-control" id="name" name="last_name" value="{{$userdata['last_name']}}">
+                        <input type="text" class="form-control" id="name" name="last_name" value="{{$userdata->last_name}}">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="my-input-box">
                         <label for="">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{$userdata['email']}}" readonly required>
+                        <input type="email" class="form-control" id="email" name="email" value="{{$userdata->email}}" readonly required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="my-input-box">
                         <label for="">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" value="{{$userdata['username']}}" required>
+                        <input type="text" class="form-control" id="username" name="username" value="{{$userdata->username}}" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="my-input-box">
                         <label for="">Marital Status</label>
                         <select class="form-select" name="marital_status" aria-label="Default select example">
-                            <option {{ $userdata['marital_status'] === NULL ? 'selected' : '' }} disabled>Please Select</option>
-                            <option value="0" {{ $userdata['marital_status'] === 0 ? 'selected' : '' }}>Single</option>
-                            <option value="1" {{ $userdata['marital_status'] === 1 ? 'selected' : '' }}>Married</option>
-                            <option value="2" {{ $userdata['marital_status'] === 2 ? 'selected' : '' }}>Divorced</option>
+                            <option {{ $userdata->marital_status === NULL ? 'selected' : '' }} disabled>Please Select</option>
+                            <option value="0" {{ $userdata->marital_status === 0 ? 'selected' : '' }}>Single</option>
+                            <option value="1" {{ $userdata->marital_status === 1 ? 'selected' : '' }}>Married</option>
+                            <option value="2" {{ $userdata->marital_status === 2 ? 'selected' : '' }}>Divorced</option>
                         </select>
                     </div>
                 </div>
@@ -108,16 +108,16 @@ $userdata = ProfileData(Auth::id());
                     <div class="my-input-box">
                         <label for="">Childern</label>
                         <select class="form-select" name="child" aria-label="Default select example">
-                            <option {{ $userdata['child'] === NULL ? 'selected' : '' }} disabled>Please Select</option>
-                            <option value="0" {{ $userdata['child'] === 0 ? 'selected' : '' }}>None</option>
-                            <option value="1" {{ $userdata['child'] === 1 ? 'selected' : '' }}>1</option>
-                            <option value="2" {{ $userdata['child'] === 2 ? 'selected' : '' }}>2</option>
-                            <option value="3" {{ $userdata['child'] === 3 ? 'selected' : '' }}>3</option>
-                            <option value="4" {{ $userdata['child'] === 4 ? 'selected' : '' }}>4</option>
-                            <option value="5" {{ $userdata['child'] === 5 ? 'selected' : '' }}>5</option>
-                            <option value="6" {{ $userdata['child'] === 6 ? 'selected' : '' }}>6</option>
-                            <option value="7" {{ $userdata['child'] === 7 ? 'selected' : '' }}>7</option>
-                            <option value="8" {{ $userdata['child'] === 8 ? 'selected' : '' }}>More than 7</option>
+                            <option {{ $userdata->child === NULL ? 'selected' : '' }} disabled>Please Select</option>
+                            <option value="0" {{ $userdata->child === 0 ? 'selected' : '' }}>None</option>
+                            <option value="1" {{ $userdata->child === 1 ? 'selected' : '' }}>1</option>
+                            <option value="2" {{ $userdata->child === 2 ? 'selected' : '' }}>2</option>
+                            <option value="3" {{ $userdata->child === 3 ? 'selected' : '' }}>3</option>
+                            <option value="4" {{ $userdata->child === 4 ? 'selected' : '' }}>4</option>
+                            <option value="5" {{ $userdata->child === 5 ? 'selected' : '' }}>5</option>
+                            <option value="6" {{ $userdata->child === 6 ? 'selected' : '' }}>6</option>
+                            <option value="7" {{ $userdata->child === 7 ? 'selected' : '' }}>7</option>
+                            <option value="8" {{ $userdata->child === 8 ? 'selected' : '' }}>More than 7</option>
                         </select>
                     </div>
                 </div>
@@ -127,17 +127,17 @@ $userdata = ProfileData(Auth::id());
                     <div class="my-input-box">
                         <label for="">Gender</label>
                         <select class="form-select" name="gender" aria-label="Default select example">
-                            <option {{ $userdata['gender'] === NULL ? 'selected' : '' }} disabled>Please Select</option>
-                            <option value="0" {{ $userdata['gender'] === 0 ? 'selected' : '' }}>Male</option>
-                            <option value="1" {{ $userdata['gender'] === 1 ? 'selected' : '' }}>Female</option>
-                            <option value="2" {{ $userdata['gender'] === 2 ? 'selected' : '' }}>Transgender</option>
+                            <option {{ $userdata->gender === NULL ? 'selected' : '' }} disabled>Please Select</option>
+                            <option value="0" {{ $userdata->gender === 0 ? 'selected' : '' }}>Male</option>
+                            <option value="1" {{ $userdata->gender === 1 ? 'selected' : '' }}>Female</option>
+                            <option value="2" {{ $userdata->gender === 2 ? 'selected' : '' }}>Transgender</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="my-input-box">
                         <label for="">Birthday</label>
-                        <input type="date" class="form-control" name="dob" value="{{($userdata['dob'] ?? '')}}">
+                        <input type="date" class="form-control" name="dob" value="{{($userdata->dob ?? '')}}">
                     </div>
                 </div>
                 <!--  -->
@@ -147,7 +147,7 @@ $userdata = ProfileData(Auth::id());
                 <div class="col-md-12">
                     <div class="my-input-box">
                         <label for="">About Me</label>
-                        <textarea class="form-control" id="bio" rows="1" name="about_me">{{($userdata['about_me'] ?? '')}}</textarea>
+                        <textarea class="form-control" id="bio" rows="1" name="about_me">{{($userdata->about_me ?? '')}}</textarea>
                     </div>
                 </div>
             </div>
@@ -163,24 +163,24 @@ $userdata = ProfileData(Auth::id());
                 <div class="col-md-6">
                     <div class="my-input-box">
                         <label for="">Height (cm)</label>
-                        <input type="text" class="form-control" id="name" name="height" value="{{$userdata['height']}}">
+                        <input type="text" class="form-control" id="name" name="height" value="{{$userdata->height}}">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="my-input-box">
                         <label for="">Weight (kg)</label>
-                        <input type="text" class="form-control" id="name" name="weight" value="{{$userdata['weight']}}">
+                        <input type="text" class="form-control" id="name" name="weight" value="{{$userdata->weight}}">
                     </div>
                 </div>
                 <div class="col-md-12">
                     <div class="my-input-box">
                         <label for="">Body Type</label>
                         <select class="form-select" name="body_type" aria-label="Default select example">
-                            <option {{ $userdata['body_type'] === NULL ? 'selected' : '' }} disabled>Please Select</option>
-                            <option value="0" {{ $userdata['body_type'] === 0 ? 'selected' : '' }}>Small</option>
-                            <option value="1" {{ $userdata['body_type'] === 1 ? 'selected' : '' }}>Average</option>
-                            <option value="2" {{ $userdata['body_type'] === 2 ? 'selected' : '' }}>Aethletic</option>
-                            <option value="3" {{ $userdata['body_type'] === 3 ? 'selected' : '' }}>Large</option>
+                            <option {{ $userdata->body_type === NULL ? 'selected' : '' }} disabled>Please Select</option>
+                            <option value="0" {{ $userdata->body_type === 0 ? 'selected' : '' }}>Small</option>
+                            <option value="1" {{ $userdata->body_type === 1 ? 'selected' : '' }}>Average</option>
+                            <option value="2" {{ $userdata->body_type === 2 ? 'selected' : '' }}>Aethletic</option>
+                            <option value="3" {{ $userdata->body_type === 3 ? 'selected' : '' }}>Large</option>
                         </select>
                     </div>
                 </div>
@@ -196,13 +196,13 @@ $userdata = ProfileData(Auth::id());
                 <div class="col-md-12">
                     <div class="my-input-box">
                         <label for="">Address</label>
-                        <textarea class="form-control" id="address" rows="1" name="address">{{($userdata['address'] ?? '')}}</textarea>
-                        <input type="hidden" value="{{$userdata['city']}}" id="city" name="city">
-                        <input type="hidden" value="{{$userdata['state']}}" id="state" name="state">
-                        <input type="hidden" value="{{$userdata['zipcode']}}" id="zipcode" name="zipcode">
-                        <input type="hidden" value="{{$userdata['country']}}" id="country" name="country">
-                        <input type="hidden" value="{{$userdata['latitude']}}" id="latitude" name="latitude">
-                        <input type="hidden" value="{{$userdata['longitude']}}" id="longitude" name="longitude">
+                        <textarea class="form-control" id="address" rows="1" name="address">{{($userdata->address ?? '')}}</textarea>
+                        <input type="hidden" value="{{$userdata->city}}" id="city" name="city">
+                        <input type="hidden" value="{{$userdata->state}}" id="state" name="state">
+                        <input type="hidden" value="{{$userdata->zipcode}}" id="zipcode" name="zipcode">
+                        <input type="hidden" value="{{$userdata->country}}" id="country" name="country">
+                        <input type="hidden" value="{{$userdata->latitude}}" id="latitude" name="latitude">
+                        <input type="hidden" value="{{$userdata->longitude}}" id="longitude" name="longitude">
                     </div>
                 </div>
             </div>

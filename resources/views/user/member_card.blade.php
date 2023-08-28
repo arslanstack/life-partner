@@ -20,7 +20,7 @@
             </a>
         </div>
         <div class="box-footer">
-            <a href="member/{{$user->username}}" class="btn btn-sm btn-primary bg-grad">View Profile</a>
+            <a href="chat/{{$user->username}}" class="btn btn-sm btn-primary bg-grad">Message</a>
             <a href="member/like/{{$user->username}}" class="btn btn-sm btn-success bg-grad2">Like Profile</a>
             <a href="member/report/{{$user->username}}" class="btn btn-sm btn-danger">Report Profile</a>
         </div>

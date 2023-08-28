@@ -19,7 +19,7 @@ $userdata = ProfileData(Auth::id());
                     Name
                 </span>
                 <span>
-                    {{($userdata['first_name'] ?? '') . ' ' . ($userdata['last_name'] ?? '')}}
+                    {{($userdata->first_name ?? '') . ' ' . ($userdata->last_name ?? '')}}
                 </span>
             </li>
             <li>
@@ -27,7 +27,7 @@ $userdata = ProfileData(Auth::id());
                     Username
                 </span>
                 <span>
-                    {{$userdata['username']}}
+                    {{$userdata->username}}
                 </span>
             </li>
             <li>
@@ -43,7 +43,7 @@ $userdata = ProfileData(Auth::id());
                     Birthday
                 </span>
                 <span>
-                    {{$userdata['dob']}}
+                    {{$userdata->dob}}
                 </span>
             </li>
             <li>
@@ -51,11 +51,11 @@ $userdata = ProfileData(Auth::id());
                     Gender
                 </span>
                 <span>
-                    @if($userdata['gender'] == '0')
+                    @if($userdata->gender == '0')
                     Man
-                    @elseif($userdata['gender'] == '1')
+                    @elseif($userdata->gender == '1')
                     Women
-                    @elseif($userdata['gender'] == '2')
+                    @elseif($userdata->gender == '2')
                     Transgender
                     @endif
                 </span>
@@ -93,9 +93,9 @@ $userdata = ProfileData(Auth::id());
                     Marital Status
                 </span>
                 <span>
-                    @if($userdata['marital_status'] == '0')
+                    @if($userdata->marital_status == '0')
                     Single
-                    @elseif($userdata['marital_status'] == '1')
+                    @elseif($userdata->marital_status == '1')
                     Married
                     @endif
                 </span>
@@ -106,9 +106,9 @@ $userdata = ProfileData(Auth::id());
                     Childern
                 </span>
                 <span>
-                    @if($userdata['child'] == '0')
+                    @if($userdata->child == '0')
                     No
-                    @elseif($userdata['child'] == '1')
+                    @elseif($userdata->child == '1')
                     Yes
                     @endif
                 </span>
@@ -145,7 +145,7 @@ $userdata = ProfileData(Auth::id());
                     Height
                 </span>
                 <span>
-                    {{($userdata['height'] ?? '')}}
+                    {{($userdata->height ?? '')}}
                 </span>
             </li>
             <li>
@@ -153,7 +153,7 @@ $userdata = ProfileData(Auth::id());
                     Weight
                 </span>
                 <span>
-                    {{($userdata['weight'] ?? '')}}
+                    {{($userdata->weight ?? '')}}
                 </span>
             </li>
             <li>
@@ -161,13 +161,13 @@ $userdata = ProfileData(Auth::id());
                     Body Type
                 </span>
                 <span>
-                    @if($userdata['body_type'] == '0')
+                    @if($userdata->body_type == '0')
                     Small
-                    @elseif($userdata['body_type'] == '1')
+                    @elseif($userdata->body_type == '1')
                     Average
-                    @elseif($userdata['body_type'] == '2')
+                    @elseif($userdata->body_type == '2')
                     Athletic
-                    @elseif($userdata['body_type'] == '3')
+                    @elseif($userdata->body_type == '3')
                     Large
                     @endif
                 </span>
@@ -183,7 +183,7 @@ $userdata = ProfileData(Auth::id());
     </div>
     <div class="content">
         <p class="text">
-        {{($userdata['about_me'] ?? '')}}
+        {{($userdata->about_me ?? '')}}
         </p>
     </div>
 </div>

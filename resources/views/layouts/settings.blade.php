@@ -81,7 +81,7 @@
                         <a href="#">
                             @auth
                             <!-- if user authenticated show profile picture else show static avatar -->
-                            <img style="width: 40px; height: 40px; border-radius: 100%;" src="{{asset('uploads/' . ($userdata['profile_image'] ?? 'avatar.jpg'))}}" alt="">
+                            <img style="width: 40px; height: 40px; border-radius: 100%;" src="{{asset('uploads/' . ($userdata->profile_image ?? 'avatar.jpg'))}}" alt="">
                             @else
                             <img style="width: 40px; height: 40px; border-radius: 100%;" src="assets/images/user-demo.png" alt="">
                             @endauth

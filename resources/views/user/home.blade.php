@@ -5,8 +5,8 @@ $userdata = ProfileData(Auth::id());
 @endphp
 <div class="write-post-area">
     <div class="write-area">
-        <img src="{{asset('uploads/' . ($userdata['profile_image'] ?? 'avatar.jpg'))}}" style="width: 40px; height: 40px; border-radius: 100%;" alt="">
-        <textarea placeholder="What's on your mind, {{($userdata['first_name'] ?? 'First Name') }}"></textarea>
+        <img src="{{asset('uploads/' . ($userdata->profile_image ?? 'avatar.jpg'))}}" style="width: 40px; height: 40px; border-radius: 100%;" alt="">
+        <textarea placeholder="What's on your mind, {{($userdata->first_name ?? 'First Name') }}"></textarea>
     </div>
     <div class="submit-area">
         <!-- Static at the moment -->
@@ -35,17 +35,17 @@ $userdata = ProfileData(Auth::id());
 <div class="profile-single-post">
     <div class="p-s-p-header-area">
         <div class="img">
-        <img src="{{asset('uploads/' . ($userdata['profile_image'] ?? 'avatar.jpg'))}}" style="width: 40px; height: 40px; border-radius: 100%;" alt="">
+        <img src="{{asset('uploads/' . ($userdata->profile_image ?? 'avatar.jpg'))}}" style="width: 40px; height: 40px; border-radius: 100%;" alt="">
             <div class="active-online"></div>
         </div>
         <h6 class="name">
-        {{($userdata['first_name'] ?? 'First Name') . ' ' . ($userdata['last_name'] ?? 'Last Name')}}
+        {{($userdata->first_name ?? 'First Name') . ' ' . ($userdata->last_name ?? 'Last Name')}}
         </h6>
         <span class="is-varify">
             <i class="fas fa-check"></i>
         </span>
         <span class="usewrname">
-            {{$userdata['username']}}
+        {{$userdata->username}}
         </span>
         <span class="post-time">
             . 19h
