@@ -723,9 +723,9 @@ $userdata = ProfileData(Auth::id());
                             </header>
                             <ul>
                                 <li>
-                                    <img src="../../../s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="">
+                                    <img src="./../uploads/avatar.jpg" style="width: 55px; height: 55px;" alt="">
                                     <div>
-                                        <h2>Prénom Nom</h2>
+                                        <h2>Sabes Nom</h2>
                                         <h3>
                                             <span class="status orange"></span>
                                             offline
@@ -733,9 +733,9 @@ $userdata = ProfileData(Auth::id());
                                     </div>
                                 </li>
                                 <li>
-                                    <img src="../../../s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_02.jpg" alt="">
+                                    <img src="./../uploads/avatar.jpg" style="width: 55px; height: 55px;" alt="">
                                     <div>
-                                        <h2>Prénom Nom</h2>
+                                        <h2>Que Nom</h2>
                                         <h3>
                                             <span class="status green"></span>
                                             online
@@ -743,9 +743,9 @@ $userdata = ProfileData(Auth::id());
                                     </div>
                                 </li>
                                 <li>
-                                    <img src="../../../s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_03.jpg" alt="">
+                                    <img src="./../uploads/avatar.jpg" style="width: 55px; height: 55px;" alt="">
                                     <div>
-                                        <h2>Prénom Nom</h2>
+                                        <h2>Tu Nom</h2>
                                         <h3>
                                             <span class="status orange"></span>
                                             offline
@@ -753,9 +753,9 @@ $userdata = ProfileData(Auth::id());
                                     </div>
                                 </li>
                                 <li>
-                                    <img src="../../../s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_04.jpg" alt="">
+                                    <img src="./../uploads/avatar.jpg" style="width: 55px; height: 55px;" alt="">
                                     <div>
-                                        <h2>Prénom Nom</h2>
+                                        <h2>Conmigo Nom</h2>
                                         <h3>
                                             <span class="status green"></span>
                                             online
@@ -763,9 +763,9 @@ $userdata = ProfileData(Auth::id());
                                     </div>
                                 </li>
                                 <li>
-                                    <img src="../../../s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_05.jpg" alt="">
+                                    <img src="./../uploads/avatar.jpg" style="width: 55px; height: 55px;" alt="">
                                     <div>
-                                        <h2>Prénom Nom</h2>
+                                        <h2>Te Hase Nom</h2>
                                         <h3>
                                             <span class="status orange"></span>
                                             offline
@@ -773,7 +773,37 @@ $userdata = ProfileData(Auth::id());
                                     </div>
                                 </li>
                                 <li>
-                                    <img src="../../../s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_06.jpg" alt="">
+                                    <img src="./../uploads/avatar.jpg" style="width: 55px; height: 55px;" alt="">
+                                    <div>
+                                        <h2>Boom Boom Nom</h2>
+                                        <h3>
+                                            <span class="status green"></span>
+                                            online
+                                        </h3>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img src="./../uploads/avatar.jpg" style="width: 55px; height: 55px;" alt="">
+                                    <div>
+                                        <h2>Conmigo Nom</h2>
+                                        <h3>
+                                            <span class="status green"></span>
+                                            online
+                                        </h3>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img src="./../uploads/avatar.jpg" style="width: 55px; height: 55px;" alt="">
+                                    <div>
+                                        <h2>Te Hase Nom</h2>
+                                        <h3>
+                                            <span class="status green"></span>
+                                            online
+                                        </h3>
+                                    </div>
+                                </li>
+                                <li>
+                                    <img src="./../uploads/avatar.jpg" style="width: 55px; height: 55px;" alt="">
                                     <div>
                                         <h2>Prénom Nom</h2>
                                         <h3>
@@ -783,37 +813,7 @@ $userdata = ProfileData(Auth::id());
                                     </div>
                                 </li>
                                 <li>
-                                    <img src="../../../s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_07.jpg" alt="">
-                                    <div>
-                                        <h2>Prénom Nom</h2>
-                                        <h3>
-                                            <span class="status green"></span>
-                                            online
-                                        </h3>
-                                    </div>
-                                </li>
-                                <li>
-                                    <img src="../../../s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_08.jpg" alt="">
-                                    <div>
-                                        <h2>Prénom Nom</h2>
-                                        <h3>
-                                            <span class="status green"></span>
-                                            online
-                                        </h3>
-                                    </div>
-                                </li>
-                                <li>
-                                    <img src="../../../s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_09.jpg" alt="">
-                                    <div>
-                                        <h2>Prénom Nom</h2>
-                                        <h3>
-                                            <span class="status green"></span>
-                                            online
-                                        </h3>
-                                    </div>
-                                </li>
-                                <li>
-                                    <img src="../../../s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_10.jpg" alt="">
+                                    <img src="./../uploads/avatar.jpg" style="width: 55px; height: 55px;" alt="">
                                     <div>
                                         <h2>Prénom Nom</h2>
                                         <h3>
@@ -826,7 +826,7 @@ $userdata = ProfileData(Auth::id());
                         </aside>
                         <main>
                             <header>
-                                <img src="../../../s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="">
+                                <img src="./../uploads/avatar.jpg" style="width: 55px; height: 55px;" alt="">
                                 <div>
                                     <h2>Vincent Porter</h2>
                                     <h3>already 1902 messages</h3>

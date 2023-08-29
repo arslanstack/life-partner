@@ -2,7 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\MembersController;/*
+use App\Http\Controllers\MembersController;
+use App\Http\Controllers\ChatController;
+
+/*
+
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -37,7 +41,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/membersLatestActive', [App\Http\Controllers\MembersController::class, 'sortActive'])->name('membersLatestActive');
     Route::get('/membersNew', [App\Http\Controllers\MembersController::class, 'sortNew'])->name('membersNew');
     Route::get('/search', [App\Http\Controllers\MembersController::class, 'search'])->name('search');
+    Route::post('sendChat', [App\Http\Controllers\ChatController::class, 'sendChat'])->name('sendChat');
+    
     Route::get('/member/{username}', [App\Http\Controllers\MembersController::class, 'getMember'])->name('user.getMember');
+
+
+    Route::get('get-user-chat-contacts/{userid}', [App\Http\Controllers\ChatController::class, 'getUserChatContacts'])->name('get-user-chat-contacts');
+    Route::get('/get-chat-messages/{authUserId}/{extraId}', [ChatController::class, 'getChatMessages']);
+
 });
 
 

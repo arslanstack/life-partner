@@ -104,3 +104,13 @@ if (!function_exists('distanceCalculator')) {
         ];
     }
 }
+if (!function_exists('debug_to_console')) {
+    function debug_to_console($data)
+    {
+        $output = $data;
+        if (is_array($output))
+            $output = implode(',', $output);
+
+        echo "<script>console.log('Laravel Debug Objects: " . $output . "' );</script>";
+    }
+}

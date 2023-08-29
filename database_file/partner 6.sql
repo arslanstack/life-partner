@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 22, 2023 at 10:18 AM
+-- Generation Time: Aug 29, 2023 at 03:27 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -50,6 +50,31 @@ INSERT INTO `admins` (`id`, `name`, `email`, `email_verified_at`, `password`, `r
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `chats`
+--
+
+CREATE TABLE `chats` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `sender_id` bigint(20) UNSIGNED NOT NULL,
+  `receiver_id` bigint(20) UNSIGNED NOT NULL,
+  `message` text DEFAULT NULL,
+  `attachment` varchar(255) DEFAULT NULL,
+  `is_read` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0=unread, 1=read',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `chats`
+--
+
+INSERT INTO `chats` (`id`, `sender_id`, `receiver_id`, `message`, `attachment`, `is_read`, `created_at`, `updated_at`) VALUES
+(1, 36, 34, 'Hello World!', NULL, 0, '2023-08-29 11:12:01', '2023-08-29 11:12:01'),
+(2, 34, 36, 'Hi!', NULL, 0, '2023-08-29 12:23:56', '2023-08-29 12:23:56');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `failed_jobs`
 --
 
@@ -61,6 +86,22 @@ CREATE TABLE `failed_jobs` (
   `payload` longtext NOT NULL,
   `exception` longtext NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jobs`
+--
+
+CREATE TABLE `jobs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `queue` varchar(255) NOT NULL,
+  `payload` longtext NOT NULL,
+  `attempts` tinyint(3) UNSIGNED NOT NULL,
+  `reserved_at` int(10) UNSIGNED DEFAULT NULL,
+  `available_at` int(10) UNSIGNED NOT NULL,
+  `created_at` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -86,7 +127,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (15, '2019_08_19_000000_create_failed_jobs_table', 1),
 (16, '2019_12_14_000001_create_personal_access_tokens_table', 1),
 (17, '2023_08_16_070123_create_admins_table', 1),
-(18, '2023_08_21_053018_create_profile_change_logs_table', 2);
+(18, '2023_08_21_053018_create_profile_change_logs_table', 2),
+(21, '2023_08_29_095554_create_jobs_table', 3),
+(23, '0000_00_00_000000_create_websockets_statistics_entries_table', 4),
+(25, '2023_08_29_104102_create_chats_table', 5);
 
 -- --------------------------------------------------------
 
@@ -156,7 +200,12 @@ INSERT INTO `profile_change_logs` (`id`, `user_id`, `profile_data`, `status`, `c
 (12, 36, '{\"first_name\":\"Muhammad\",\"last_name\":\"Arslan\",\"age\":23,\"profile_image\":\"1692607969.jpeg\",\"email\":\"arslanstack@gmail.com\",\"username\":\"arslanstack\",\"child\":0,\"marital_status\":0,\"gender\":0,\"dob\":\"2000-02-02\",\"about_me\":\"\\ud83c\\udf1f Making the web a more beautiful and functional place\\u2728\",\"address\":\"NetSol Software Technology Park, Netsol Avenue, Khuda Buksh Colony Lahore, Punjab, Pakistan\",\"height\":177,\"weight\":72,\"body_type\":2,\"city\":\"Lahore\",\"state\":\"Punjab\",\"zipcode\":null,\"country\":\"Pakistan\",\"latitude\":\"31.4966975\",\"longitude\":\"74.4222396\"}', 'approved', '2023-08-21 04:09:55', '2023-08-21 04:10:34'),
 (13, 36, '{\"first_name\":\"Muhammad\",\"last_name\":\"Arslan\",\"age\":23,\"profile_image\":\"1692610610.jpeg\",\"email\":\"arslanstack@gmail.com\",\"username\":\"arslanstack\",\"child\":0,\"marital_status\":0,\"gender\":0,\"dob\":\"2000-02-02\",\"about_me\":\"\\ud83c\\udf1f Making the web a more beautiful and functional place\\u2728\",\"address\":\"NETSOL Avenue\\u060c Main Ghazi Rd, Khuda Buksh Colony Lahore, Punjab 54792, Pakistan\",\"height\":177,\"weight\":72,\"body_type\":2,\"city\":\"Lahore\",\"state\":\"Punjab\",\"zipcode\":\"54792\",\"country\":\"Pakistan\",\"latitude\":\"31.4967647\",\"longitude\":\"74.4221337\"}', 'approved', '2023-08-21 04:36:50', '2023-08-21 04:38:28'),
 (14, 36, '{\"first_name\":\"Muhammad\",\"last_name\":\"Arslan\",\"age\":23,\"profile_image\":\"1692608995.jpg\",\"email\":\"arslanstack@gmail.com\",\"username\":\"hanif\",\"child\":0,\"marital_status\":0,\"gender\":0,\"dob\":\"2000-02-02\",\"about_me\":\"\\ud83c\\udf1f Making the web a more beautiful and functional place\\u2728\",\"address\":\"V248+MGV, Gari Khata, Karachi, Karachi City, Sindh, Pakistan\",\"height\":177,\"weight\":72,\"body_type\":2,\"city\":\"Karachi\",\"state\":\"Sindh\",\"zipcode\":null,\"country\":\"Pakistan\",\"latitude\":\"24.8567275\",\"longitude\":\"67.0163109\"}', 'approved', '2023-08-21 04:39:52', '2023-08-21 04:40:01'),
-(16, 34, '{\"first_name\":null,\"last_name\":null,\"age\":null,\"profile_image\":null,\"email\":\"backendt4@gmail.com\",\"username\":\"backendt4\",\"child\":null,\"marital_status\":null,\"gender\":null,\"dob\":null,\"about_me\":null,\"address\":null,\"height\":null,\"weight\":null,\"body_type\":null,\"city\":null,\"state\":null,\"zipcode\":null,\"country\":null,\"latitude\":null,\"longitude\":null}', 'approved', '2023-08-22 02:38:26', '2023-08-22 02:38:41');
+(16, 34, '{\"first_name\":null,\"last_name\":null,\"age\":null,\"profile_image\":null,\"email\":\"backendt4@gmail.com\",\"username\":\"backendt4\",\"child\":null,\"marital_status\":null,\"gender\":null,\"dob\":null,\"about_me\":null,\"address\":null,\"height\":null,\"weight\":null,\"body_type\":null,\"city\":null,\"state\":null,\"zipcode\":null,\"country\":null,\"latitude\":null,\"longitude\":null}', 'approved', '2023-08-22 02:38:26', '2023-08-22 02:38:41'),
+(17, 34, '{\"first_name\":\"Scarlete\",\"last_name\":\"Johanson\",\"age\":23,\"profile_image\":\"1692689906.jpg\",\"email\":\"backendt4@gmail.com\",\"username\":\"backendt4\",\"child\":0,\"marital_status\":0,\"gender\":1,\"dob\":\"1999-11-22\",\"about_me\":\"Scarlett Johansson, (born November 22, 1984, New York City, New York, U.S.), American actress and singer whose acting range earned her popular acclaim in a variety of genres, from period drama to thriller and action adventure\",\"address\":\"F9VW+3WW, Main Main Qazi Rd, Nishat Colony Lahore, Punjab, Pakistan\",\"height\":160,\"weight\":57,\"body_type\":2,\"city\":\"Lahore\",\"state\":\"Punjab\",\"zipcode\":null,\"country\":\"Pakistan\",\"latitude\":\"31.4927025\",\"longitude\":\"74.397301\"}', 'approved', '2023-08-22 06:51:47', '2023-08-22 06:52:15'),
+(18, 34, '{\"first_name\":\"Scarlete\",\"last_name\":\"Johanson\",\"age\":23,\"profile_image\":\"1692705107.png\",\"email\":\"backendt4@gmail.com\",\"username\":\"backendt4\",\"child\":0,\"marital_status\":0,\"gender\":1,\"dob\":\"1999-11-22\",\"about_me\":\"Scarlett Johansson, (born November 22, 1984, New York City, New York, U.S.), American actress and singer whose acting range earned her popular acclaim in a variety of genres, from period drama to thriller and action adventure\",\"address\":\"F9VW+3WW, Main Main Qazi Rd, Nishat Colony Lahore, Punjab, Pakistan\",\"height\":160,\"weight\":57,\"body_type\":2,\"city\":\"Lahore\",\"state\":\"Punjab\",\"zipcode\":null,\"country\":\"Pakistan\",\"latitude\":\"31.4927025\",\"longitude\":\"74.397301\"}', 'approved', '2023-08-23 00:09:21', '2023-08-23 00:10:38'),
+(19, 36, '{\"first_name\":\"Muhammad\",\"last_name\":\"Arslan\",\"age\":23,\"profile_image\":\"1692610792.jpeg\",\"email\":\"arslanstack@gmail.com\",\"username\":\"arslanstack\",\"child\":0,\"marital_status\":0,\"gender\":0,\"dob\":\"2000-02-02\",\"about_me\":\"\\ud83c\\udf1f Making the web a more beautiful and functional place.\\nFacere aut voluptatum id qui tempore. Cum ad ad voluptatem quia tenetur molestias.\\u2728\",\"address\":\"NETSOL Avenue\\u060c Main Ghazi Rd, Khuda Buksh Colony Lahore, Punjab 54792, Pakistan\",\"height\":177,\"weight\":72,\"body_type\":2,\"city\":\"Lahore\",\"state\":\"Punjab\",\"zipcode\":\"54792\",\"country\":\"Pakistan\",\"latitude\":\"31.4967647\",\"longitude\":\"74.4221337\"}', 'approved', '2023-08-23 07:37:51', '2023-08-23 07:38:42'),
+(20, 36, '{\"first_name\":\"Muhammad\",\"last_name\":\"Arslan\",\"age\":23,\"profile_image\":\"1693200117.jpg\",\"email\":\"arslanstack@gmail.com\",\"username\":\"arslanstack\",\"child\":\"0\",\"marital_status\":\"0\",\"gender\":\"0\",\"dob\":\"2000-02-02\",\"about_me\":\"\\ud83c\\udf1f Making the web a more beautiful and functional place.\\r\\nFacere aut voluptatum id qui tempore. Cum ad ad voluptatem quia tenetur molestias.\\u2728\",\"address\":\"Ghazi Rd, Gulshan e Ali Colony, Lahore, Punjab, Pakistan\",\"height\":\"177\",\"weight\":\"72\",\"body_type\":\"2\",\"city\":\"Lahore\",\"state\":\"Punjab\",\"zipcode\":null,\"country\":\"Pakistan\",\"latitude\":\"31.4912048\",\"longitude\":\"74.4156848\"}', 'rejected', '2023-08-28 00:21:57', '2023-08-28 01:49:20'),
+(21, 36, '{\"first_name\":\"Muhammad\",\"last_name\":\"Arslan\",\"age\":23,\"profile_image\":\"1692610792.jpeg\",\"email\":\"arslanstack@gmail.com\",\"username\":\"arslanstack\",\"child\":0,\"marital_status\":0,\"gender\":0,\"dob\":\"2000-02-02\",\"about_me\":\"\\ud83c\\udf1f Making the web a more beautiful and functional place.\\r\\nFacere aut voluptatum id qui tempore. Cum ad ad voluptatem quia tenetur molestias.\\u2728\",\"address\":\"Ghazi Rd, Gulshan e Ali Colony, Lahore, Punjab, Pakistan\",\"height\":177,\"weight\":72,\"body_type\":2,\"city\":\"Lahore\",\"state\":\"Punjab\",\"zipcode\":null,\"country\":\"Pakistan\",\"latitude\":\"31.4912048\",\"longitude\":\"74.4156848\"}', 'approved', '2023-08-28 02:26:18', '2023-08-28 02:27:00');
 
 -- --------------------------------------------------------
 
@@ -220,8 +269,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `unique_id`, `first_name`, `last_name`, `username`, `email`, `password`, `email_verified_at`, `iam`, `interestedin`, `financial_support`, `dob`, `age`, `height`, `weight`, `body_type`, `child`, `city`, `state`, `zipcode`, `country`, `address`, `timezone`, `gender`, `about_me`, `latitude`, `longitude`, `profile_image`, `last_login`, `membership_type`, `membership_price`, `membership_start`, `membership_end`, `membership_status`, `marital_status`, `privacy_status`, `verify_status`, `status`, `show_last_login`, `block_male_msg`, `block_female_msg`, `block_trans_msg`, `block_all_email`, `block_money_making_opp_email`, `block_local_event_meet_up_email`, `block_like_favorite_email`, `created_at`, `updated_at`) VALUES
-(34, '1692689242$backendt4@gmail.com', 'Scarlete', 'Johanson', 'backendt4', 'backendt4@gmail.com', '$2y$10$1uP.PgJJn.1WJ8IUDiO9FebmGZ9OpFBlUn7naBgkHwq9DUXxdIB2W', '2023-08-22 02:28:08', 'Sugar Baby (Mujer/Women)', 'Sugar Daddy', 1, '1999-11-22', 23, 160.00, 57.00, 2, 0, 'Lahore', 'Punjab', NULL, 'Pakistan', 'F9VW+3WW, Main Main Qazi Rd, Nishat Colony Lahore, Punjab, Pakistan', 'No time zone selected', 1, 'Scarlett Johansson, (born November 22, 1984, New York City, New York, U.S.), American actress and singer whose acting range earned her popular acclaim in a variety of genres, from period drama to thriller and action adventure', '31.4927025', '74.397301', '1692689906.jpg', '2023-08-22 07:51:27', 0, 'Free', '2023-08-22', NULL, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, '2023-08-22 02:27:22', '2023-08-22 02:51:27'),
-(36, '1692344430$arslanstack@gmail.com', 'Muhammad', 'Arslan', 'arslanstack', 'arslanstack@gmail.com', '$2y$10$ddHcvYypbSnWR.z3gbETau1tPFzDqziOdwIy0y3aXTb.QEPuIYo2O', '2023-08-18 02:41:23', 'Sugar Daddy', 'Sugar Baby (Mujer/Women)', 0, '2000-02-02', 23, 177.00, 72.00, 2, 0, 'Lahore', 'Punjab', '54792', 'Pakistan', 'NETSOL Avenue، Main Ghazi Rd, Khuda Buksh Colony Lahore, Punjab 54792, Pakistan', 'No time zone selected', 0, '🌟 Making the web a more beautiful and functional place.\nFacere aut voluptatum id qui tempore. Cum ad ad voluptatem quia tenetur molestias.✨', '31.4967647', '74.4221337', '1692610792.jpeg', '2023-08-22 05:44:56', 0, 'Free', '2023-08-18', NULL, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, '2023-08-18 02:40:30', '2023-08-22 00:44:56'),
+(34, '1692689242$backendt4@gmail.com', 'Scarlete', 'Johanson', 'backendt4', 'backendt4@gmail.com', '$2y$10$1uP.PgJJn.1WJ8IUDiO9FebmGZ9OpFBlUn7naBgkHwq9DUXxdIB2W', '2023-08-22 02:28:08', 'Sugar Baby (Mujer/Women)', 'Sugar Daddy', 1, '1999-11-22', 23, 160.00, 57.00, 2, 0, 'Lahore', 'Punjab', NULL, 'Pakistan', 'F9VW+3WW, Main Main Qazi Rd, Nishat Colony Lahore, Punjab, Pakistan', 'No time zone selected', 1, 'Scarlett Johansson, (born November 22, 1984, New York City, New York, U.S.), American actress and singer whose acting range earned her popular acclaim in a variety of genres, from period drama to thriller and action adventure', '31.4927025', '74.397301', '1692767361.png', '2023-08-25 12:33:32', 0, 'Free', '2023-08-22', NULL, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, '2023-08-22 02:27:22', '2023-08-25 07:33:32'),
+(36, '1692344430$arslanstack@gmail.com', 'Muhammad', 'Arslan', 'arslanstack', 'arslanstack@gmail.com', '$2y$10$ddHcvYypbSnWR.z3gbETau1tPFzDqziOdwIy0y3aXTb.QEPuIYo2O', '2023-08-18 02:41:23', 'Sugar Daddy', 'Sugar Baby (Mujer/Women)', 0, '2000-02-02', 23, 177.00, 72.00, 2, 0, 'Lahore', 'Punjab', NULL, 'Pakistan', 'Ghazi Rd, Gulshan e Ali Colony, Lahore, Punjab, Pakistan', 'No time zone selected', 0, '🌟 Sabes que tu corazón conmigo, te hace boom boom conmigo✨', '31.4912048', '74.4156848', '1692610792.jpeg', '2023-08-29 09:46:29', 0, 'Free', '2023-08-18', NULL, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, '2023-08-18 02:40:30', '2023-08-29 04:46:29'),
 (783, '1692356976$klein.mariane@example.com', 'Rosamond', 'Powlowski', 'sincere.thompson', 'camron.kirlin@example.net', '$2y$10$L8/A7eO4m5s6ibsA1mX7rubQ4LqMxTMNvGSpSbigYAbXLD1LWN7Je', '2023-08-18 06:09:36', 'Sugar Baby (Mujer/Women)', 'Sugar Daddy', 1, '1975-07-13', 20, 170.00, 65.00, 3, 1, 'Bergnaumberg', 'Arizona', '22714', 'Christmas Island', '4365 Lea Turnpike Suite 993\nTimothyhaven, LA 42261', 'America/Tijuana', 0, 'Fugaus eos vel quia animi. Illum et nihil itaque non natus qui quo. Facere aut voluptatum id qui tempore. Cum ad ad voluptatem quia tenetur molestias.', '31.4967647', '74.4221337', '1692596815.png', '2023-08-18 11:09:36', 0, 'Free', '2023-08-18', NULL, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, '2023-08-18 06:09:57', '2023-08-22 00:45:54'),
 (784, '1692356976$thompson.pierre@example.com', 'Donna', 'Feest', 'cartwright.esteban', 'fbernhard@example.net', '$2y$10$TBT83xoJUju19IySFKgI5eILgxN.1W7WAY26U21x6g1H5c/8WDe6G', '2023-08-18 06:09:36', 'Sugar Baby (Trans)', 'Sugar Baby (Mujer/Women)', 0, '2008-11-15', 66, 180.00, 91.00, 0, 2, 'East Garryburgh', 'Maine', '87272-5866', 'Korea', '5042 Crona Squares\nEast Daviontown, NE 53793', 'America/Lower_Princes', 0, 'Quae dolorem aut beatae omnis tempora et. Consectetur quas exercitationem dolorem vel beatae. Praesentium ad atque asperiores eos praesentium expedita et.', '35.439557', '-23.523502', '1692608449.png', '2023-08-18 11:09:36', 0, 'Free', '2023-08-18', NULL, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 0, '2023-08-18 06:09:57', '2023-08-18 06:09:57'),
 (785, '1692356976$sbeier@example.org', 'Elyssa', 'Grant', 'maia64', 'walter.margarete@example.net', '$2y$10$fFNsdCQIa3fD5YLHw.hewePVUXCN2XM61c8b58osXB4x49YEeCX1W', '2023-08-18 06:09:36', 'Sugar Baby (Trans)', 'Sugar Mommy', 1, '1984-07-25', 26, 191.00, 91.00, 2, 4, 'Rowenaview', 'Maryland', '23436', 'Macao', '44476 Rath Estates Suite 076\nRebecafurt, VA 30713-1756', 'Europe/Warsaw', 2, 'Sint dignissimos rerum et corporis est odio. Illo est ut et perspiciatis. Reiciendis consequatur quaerat non qui corrupti. Facere impedit nobis eum quia voluptates ut occaecati.', '1.633845', '76.468401', NULL, '2023-08-18 11:09:36', 0, 'Free', '2023-08-18', NULL, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, '2023-08-18 06:09:57', '2023-08-18 06:09:57'),
@@ -442,6 +491,22 @@ INSERT INTO `users` (`id`, `unique_id`, `first_name`, `last_name`, `username`, `
 (998, '1692357039$wellington.koch@example.org', 'Jackson', 'Roob', 'raymundo36', 'viola31@example.net', '$2y$10$cunV.BK9QFWpAl60ZuPOAODgM0ATkOFxe4f4irCeyNWeZzfOVHiVa', '2023-08-18 06:10:39', 'Sugar Mommy', 'Sugar Baby', 0, '1981-07-16', 25, 172.00, 53.00, 2, 3, 'Smithamshire', 'Pennsylvania', '14289-3074', 'Guam', '201 Westley Islands Apt. 389\nStanleymouth, OH 78751-0023', 'Asia/Tomsk', 1, 'Et reiciendis nobis consequuntur voluptate. Voluptatem porro dolores ullam ex et atque iusto. Voluptas recusandae qui perferendis consequuntur quibusdam.', '-86.891402', '121.623874', NULL, '2023-08-18 11:10:39', 0, 'Free', '2023-08-18', NULL, 0, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, '2023-08-18 06:10:59', '2023-08-18 06:10:59'),
 (999, '1692357039$gregoria85@example.org', 'Nicole', 'Trantow', 'reinger.jillian', 'verner37@example.net', '$2y$10$nh0WuhoUZccJXQj/UCQm9u3mb79YyjZ16EobAnmQJTiqlluWvE1vi', '2023-08-18 06:10:39', 'Sugar Baby (Hombre/Man)', 'Sugar Baby (Trans)', 0, '1983-08-30', 69, 168.00, 68.00, 2, 1, 'Predovicberg', 'Kansas', '41311-8350', 'Germany', '5585 Virginie Streets Suite 214\nEmoryland, NV 41990', 'Indian/Reunion', 2, 'Quisquam sed aut sequi enim suscipit explicabo. Natus dolor ullam quaerat porro animi qui ut. Dolorem est blanditiis sed placeat esse eveniet. Ipsa nobis est dolores minus.', '-0.891805', '-11.68634', NULL, '2023-08-18 11:10:39', 0, 'Free', '2023-08-18', NULL, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, '2023-08-18 06:10:59', '2023-08-18 06:10:59');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `websockets_statistics_entries`
+--
+
+CREATE TABLE `websockets_statistics_entries` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `app_id` varchar(255) NOT NULL,
+  `peak_connection_count` int(11) NOT NULL,
+  `websocket_message_count` int(11) NOT NULL,
+  `api_message_count` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -454,11 +519,26 @@ ALTER TABLE `admins`
   ADD UNIQUE KEY `admins_email_unique` (`email`);
 
 --
+-- Indexes for table `chats`
+--
+ALTER TABLE `chats`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `chats_sender_id_foreign` (`sender_id`),
+  ADD KEY `chats_receiver_id_foreign` (`receiver_id`);
+
+--
 -- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `jobs`
+--
+ALTER TABLE `jobs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `jobs_queue_index` (`queue`);
 
 --
 -- Indexes for table `migrations`
@@ -503,6 +583,12 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
+-- Indexes for table `websockets_statistics_entries`
+--
+ALTER TABLE `websockets_statistics_entries`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -513,16 +599,28 @@ ALTER TABLE `admins`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `chats`
+--
+ALTER TABLE `chats`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `jobs`
+--
+ALTER TABLE `jobs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -534,7 +632,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `profile_change_logs`
 --
 ALTER TABLE `profile_change_logs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -543,8 +641,21 @@ ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1001;
 
 --
+-- AUTO_INCREMENT for table `websockets_statistics_entries`
+--
+ALTER TABLE `websockets_statistics_entries`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `chats`
+--
+ALTER TABLE `chats`
+  ADD CONSTRAINT `chats_receiver_id_foreign` FOREIGN KEY (`receiver_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `chats_sender_id_foreign` FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `profile_change_logs`
