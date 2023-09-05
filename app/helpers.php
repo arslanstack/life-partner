@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use app\Models\Admin;
 use App\Models\ProfileChangeLog;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 
 if (!function_exists('countUsers')) {
@@ -112,5 +114,60 @@ if (!function_exists('debug_to_console')) {
             $output = implode(',', $output);
 
         echo "<script>console.log('Laravel Debug Objects: " . $output . "' );</script>";
+    }
+}
+if (!function_exists('changeStatus')) {
+    function changeStatus($id)
+    {
+        if (Auth::check() && !Cache::has('user-is-online-' . Auth::user()->id)) {
+            $expiresAt = Carbon::now()->addMinutes(1); // keep online for 5 min
+            Cache::put('user-is-online-' . Auth::user()->id, true, $expiresAt);
+            User::where('id', Auth::user()->id)->update(['last_login' => now()]);
+        }
+    }
+}
+if (!function_exists('isOnline')) {
+    function isOnline($id)
+    {
+        return Cache::has('user-is-online-' . Auth::user()->id);
+    }
+}
+if (!function_exists('totalChatCount')) {
+    function totalChatCount($me, $him)
+    {
+        // calculate total chat count where $me is sender and $him is receiver or $him is sender and $me is receiver
+        $totalChatCount = DB::table('chats')->where(function ($query) use ($me, $him) {
+            $query->where('sender_id', $me)->where('receiver_id', $him);
+        })->orWhere(function ($query) use ($me, $him) {
+            $query->where('sender_id', $him)->where('receiver_id', $me);
+        })->count();
+        return $totalChatCount;
+    }
+}
+if (!function_exists('totalUnreadCount')) {
+    function totalUnreadCount($me, $him)
+    {
+        // calculate total unread chats where him is sender and me is receiver
+        $totalUnreadCount = DB::table('chats')->where('sender_id', $him)->where('receiver_id', $me)->where('is_read', 0)->count();
+        if ($totalUnreadCount > 0) {
+            return $totalUnreadCount;
+        }
+        else{
+            return 0;
+        }
+    }
+}
+if (!function_exists('readAll')) {
+    function readAll($me, $him)
+    {
+        // mark all chats read where me is receiver
+        $readAll = DB::table('chats')->where('sender_id', $him)->where('receiver_id', $me)->update(['is_read' => 1]);
+        return $readAll;
+    }
+}
+if (!function_exists('formatTime')) {
+    function formatTime($timestamp)
+    {
+        return Carbon::parse($timestamp)->format('M j, g:i A');
     }
 }

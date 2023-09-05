@@ -8,12 +8,6 @@
     .dots {
         padding: 0 5px;
     }
-
-    /* Style for active page */
-    .active {
-        background-color: #5e616a;
-        color: #fff;
-    }
 </style>
 
 <!-- ==========Breadcrumb-Section========== -->
@@ -57,7 +51,7 @@
         <div class="row" id="user-cards-container">
             @include('user.member_card')
         </div>
-        <!-- Data Loader -->
+        <!-- Data Loader SVG-->
         <div class="auto-load text-center" style="display: none;">
             <svg version="1.1" id="L9" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="60" viewBox="0 0 100 100" enable-background="new 0 0 0 0" xml:space="preserve">
                 <path fill="#000" d="M73,50c0-12.7-10.3-23-23-23S27,37.3,27,50 M30.9,50c0-10.5,8.5-19.1,19.1-19.1S69.1,39.5,69.1,50">
@@ -314,51 +308,6 @@
                 <button type="button" class="custom-button3" id="resetBtn">Clear Form</button>
                 <button type="button" id="formSubmitBtn" class="custom-button">Search</button>
                 </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Chat Modal -->
-<!-- User Chat Module -->
-<div class="modal fade" id="chatModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable" role="document">
-        <div class="modal-content" style="background-color: #3b3e49;">
-            <div class="modal-header" style="height: 12px; margin-top:5px; border:none;">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
-            </div>
-            <div class="modal-body">
-                <div id="mycontainer">
-                    <aside>
-                        <header>
-                            <input type="text" placeholder="search">
-                        </header>
-                        <ul id="chatList">
-
-                        </ul>
-                    </aside>
-                    <main>
-                        <header>
-                            <img src="" id="chatImage" style="width: 55px; height: 55px;" alt="">
-                            <div>
-                                <h2 id="chatName"></h2>
-                                <h3 id="chatCount"></h3>
-                            </div>
-                        </header>
-                        <ul id="chat">
-                        </ul>
-                        <footer>
-                            <form action="sendChat" method="POST">
-                                @csrf
-                                <input type="text" id="receiver_id" name="receiver_id" value="" hidden>
-                                <textarea name="message" id="message" placeholder="Type your message"></textarea>
-                                <!-- <img src="../../../s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png" alt="">
-                                <img src="../../../s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_file.png" alt=""> -->
-                                <button type="submit" class="custom-button">Send</button>
-                            </form>
-                        </footer>
-                    </main>
-                </div>
             </div>
         </div>
     </div>
@@ -713,12 +662,6 @@
         }
     });
 
-
-    /*------------------------------------------
-    --------------------------------------------
-    call infinteLoadMore()
-    --------------------------------------------
-    --------------------------------------------*/
     function infinteLoadMore(page) {
         console.log("Constructed URL: " + ENDPOINT + "?page=" + currentPage);
         isLoading = true;
@@ -748,154 +691,6 @@
                 isLoading = false;
                 return;
             });
-    }
-</script>
-
-<script>
-    function openChat(authUserId, otherId, otherFirstName, otherLastName, otherProfileImg) {
-        // var selectedLiid = $(this).attr('id');
-        var selectedLiid = 'li' + otherId;
-        var chatName = $('#chatName');
-        var chatImage = $('#chatImage');
-        var receiverId = $('#receiver_id');
-
-
-        $('#chatList li').removeClass('active');
-        console.log(selectedLiid);
-        var selectedLi = document.getElementById(selectedLiid);
-        selectedLi.classList.add('active');
-        getChats(authUserId, otherId, otherFirstName);
-
-        chatName.text(otherFirstName + ' ' + otherLastName);
-        chatImage.attr('src', 'uploads/' + otherProfileImg);
-        receiverId.val(otherId);
-    }
-
-    function populateChat(extraId, extraProfileImg, extraFirstName, extraLastName) {
-        var chatModal = $('#chatModal');
-        var authUserId = "{{Auth::id()}}";
-        var chatList = $('#chatList');
-        var chat = $('#chat');
-        var chatName = $('#chatName');
-        var chatImage = $('#chatImage');
-        var receiverId = $('#receiver_id');
-
-
-        $.ajax({
-            url: '/get-user-chat-contacts/' + authUserId,
-            type: 'GET',
-            dataType: 'json',
-            success: function(response) {
-
-                chatList.empty();
-
-                // Add the extra record at the top
-                var extraListItem = `
-                    <li class="active" id="li${extraId}"  onclick="openChat(${authUserId},${extraId},'${extraFirstName}','${extraLastName}','${extraProfileImg}')">
-                        <img src="uploads/${extraProfileImg}" style="width: 55px; height: 55px;" alt="">
-                        <div>
-                            <h2>${extraFirstName} ${extraLastName}</h2>
-                            <h3>
-                                <span class="status orange"></span>
-                                offline ${extraId}
-                            </h3>
-                        </div>
-                    </li>
-                `;
-                chatList.append(extraListItem);
-
-                // Loop through the fetched contacts and generate list items
-                response.forEach(function(contact) {
-                    if (contact.id != extraId) {
-                        var listItem = `
-                        <li id="li${contact.id}" onclick="openChat(${authUserId},${contact.id},'${contact.first_name}','${contact.last_name}','${contact.profile_image}')">
-                            <img src="uploads/${contact.profile_image}" style="width: 55px; height: 55px;" alt="">
-                            <div>
-                                <h2>${contact.first_name} ${contact.last_name}</h2>
-                                <h3>
-                                    <span class="status orange"></span>
-                                    offline ${contact.id}
-                                </h3>
-                            </div>
-                        </li>
-                    `;
-                    }
-                    // Append the generated list item to the chatList
-                    chatList.append(listItem);
-                });
-
-                chatName.text(extraFirstName + ' ' + extraLastName);
-                chatImage.attr('src', 'uploads/' + extraProfileImg);
-                receiverId.val(extraId);
-
-                getChats(authUserId, extraId, extraFirstName);
-
-                chatModal.modal('show');
-            },
-            error: function(xhr, status, error) {
-                console.error("error found");
-            }
-        });
-    }
-
-    function getChats(authUserId, otherId, otherFirstName) {
-        var chatModal = $('#chatModal');
-        var authUserId = "{{Auth::id()}}";
-        var chatList = $('#chatList');
-        var chat = $('#chat');
-        var chatName = $('#chatName');
-        var chatImage = $('#chatImage');
-        var receiverId = $('#receiver_id');
-        $.ajax({
-            url: '/get-chat-messages/' + authUserId + '/' + otherId,
-            type: 'GET',
-            dataType: 'json',
-            success: function(chatMessages) {
-                chat.empty();
-
-                // Loop through chat messages and generate list items
-                chatMessages.forEach(function(message) {
-                    if (message.sender_id == authUserId && message.receiver_id == otherId) {
-                        var listItemClass = 'me';
-                        var statusClass = 'blue';
-                        var senderName = 'You';
-                    } else if (message.sender_id == otherId && message.receiver_id == authUserId) {
-                        var listItemClass = 'you';
-                        var statusClass = 'green';
-                        var senderName = otherFirstName;
-                    }
-                    console.log(message);
-                    var chatItem = `
-                                <li class="${listItemClass}">
-                                    <div class="entete">
-                                        <h3>${formatTimeAndDate(message.created_at)}</h3>
-                                        <h2>${senderName}</h2>
-                                        <span class="status ${statusClass}"></span>
-                                    </div>
-                                    <div class="message">${message.message}</div>
-                                </li>
-                            `;
-
-                    chat.append(chatItem);
-                });
-
-                chatModal.modal('show');
-            },
-            error: function(xhr, status, error) {
-                console.error("Error fetching chat messages");
-            }
-        });
-    }
-    // Function to format timestamp into "Hour:MinAM/PM, Date" format
-    function formatTimeAndDate(timestamp) {
-        var options = {
-            hour: 'numeric',
-            minute: 'numeric',
-            hour12: true,
-            day: 'numeric',
-            month: 'short'
-        };
-        return new Date(timestamp).toLocaleDateString('en-US', options);
     }
 </script>
 @endsection

@@ -47,7 +47,7 @@
         <i class="fas fa-angle-up"></i>
     </a>
     <!-- ==========Overlay========== -->
-
+    {{changeStatus(Auth::id())}}
     <!-- ==========Header-Section========== -->
     <header class="header-section">
         <div class="container">

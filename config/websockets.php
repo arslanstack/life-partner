@@ -8,8 +8,8 @@ return [
      * Set a custom dashboard configuration
      */
     'dashboard' => [
-        'port' => env('LARAVEL_WEBSOCKETS_PORT', 6001),
-        'host' => env('LARAVEL_WEBSOCKETS_HOST'),
+        'port' => env('VITE_PUSHER_PORT', 6001),
+        'host' => env('VITE_PUSHER_HOST'),
     ],
 
     /*
@@ -24,19 +24,17 @@ return [
      */
     'apps' => [
         [
-            'port' => env('LARAVEL_WEBSOCKETS_PORT', 6001),
-            'host' => env('LARAVEL_WEBSOCKETS_HOST'),
             'id' => env('PUSHER_APP_ID'),
+            'port' => env('VITE_PUSHER_PORT', 6001),
+            'host' => env('VITE_PUSHER_HOST'),
             'name' => env('APP_NAME'),
             'key' => env('PUSHER_APP_KEY'),
             'secret' => env('PUSHER_APP_SECRET'),
-            'path' => env('PUSHER_APP_PATH'),
-            'capacity' => null,
             'enable_client_messages' => false,
             'enable_statistics' => true,
-            'encrypted' => false,
         ],
     ],
+
 
     /*
      * This class is responsible for finding the apps. The default provider

@@ -5,30 +5,38 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @vite('resources/js/app.js')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/animate.css">
-    <link rel="stylesheet" href="assets/css/flaticon.css">
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
-    <link rel="stylesheet" href="assets/css/odometer.css">
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="assets/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="assets/css/nice-select.css">
-    <link rel="stylesheet" href="assets/css/jquery.animatedheadline.css">
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
-    <link rel="stylesheet" href="assets/css/slidersandbtns.css">
-    <!-- <link rel="stylesheet" href="assets/css/dark.css"> -->
-
-    <link rel="shortcut icon" href="assets/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./../assets/css/all.min.css">
+    <link rel="stylesheet" href="./../assets/css/animate.css">
+    <link rel="stylesheet" href="./../assets/css/flaticon.css">
+    <link rel="stylesheet" href="./../assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="./../assets/css/odometer.css">
+    <link rel="stylesheet" href="./../assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="./../assets/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="./../assets/css/nice-select.css">
+    <link rel="stylesheet" href="./../assets/css/jquery.animatedheadline.css">
+    <link rel="stylesheet" href="./../assets/css/main.css">
+    <link rel="stylesheet" href="./../assets/css/responsive.css">
+    <link rel="stylesheet" href="./../assets/css/slidersandbtns.css">
+    <!-- <link rel="stylesheet" href="./../assets/css/dark.css"> -->
+    <script>
+        var send_end = "{{Auth::id()}}";
+        console.log(send_end);
+        var rec_end = null;
+        var rec_name;
+        var allUsers = [];
+    </script>
+    <link rel="shortcut icon" href="./../assets/images/favicon.png" type="image/x-icon">
 
     <title>Life Partner - Dating Website</title>
-    
+
 
 </head>
 
 <body>
+    {{changeStatus(Auth::id())}}
     <!-- ==========Preloader========== -->
     <div class="preloader">
         <div class="preloader-inner">
@@ -53,12 +61,15 @@
             <div class="header-wrapper">
                 <div class="logo">
                     <a href="/">
-                        <img src="assets/images/logo/logo.png" alt="logo">
+                        <img src="./../assets/images/logo/logo.png" alt="logo">
                     </a>
                 </div>
                 <ul class="menu">
                     <li>
-                        <a href="/members" class="">Members</a>
+                        <a href="/chat" {{ request()->is('chat*') ? "class=active" : 'hidden' }}>Chat</a>
+                    </li>
+                    <li>
+                        <a href="/members" {{ request()->route()->getName() === 'members' ? "class=active" : '' }} >Members</a>
                     </li>
                     <li>
                         <a href="/home" onclick="localStorage.clear();" class="">Home</a>
@@ -73,90 +84,15 @@
                         <a href="/login">Sign in</a>
                     </li>
                     @endif
-                    <!--<li>
-                        <a href="shop2.html">Shop</a>
-                    </li>
-                    <li>
-                        <a href="#">pages</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="user-setting.html">User Panel</a>
-                            </li>
-                            <li>
-                                <a href="about.html">About Us</a>
-                            </li>
-                            <li>
-                                <a href="community-single.html">Community Single</a>
-                            </li>
-                            <li>
-                                <a href="members.html">Members</a>
-                            </li>
-                            <li>
-                                <a href="shop3.html">Shop sidebar</a>
-                            </li>
-                            <li>
-                                <a href="single-profile.html">Single Profile One</a>
-                            </li>
-                            <li>
-                                <a href="single-profile2.html">Single Profile Two</a>
-                            </li>
-                            <li>
-                                <a href="single-profile3.html">Single Profile Three</a>
-                            </li>
-                            <li>
-                                <a href="single-shope.html">Shop Details</a>
-                            </li>
-                            <li>
-                                <a href="contact.html">Contact</a>
-                            </li>
-                            <li>
-                                <a href="login.html">Login</a>
-                            </li>
-                            <li>
-                                <a href="register.html">Register</a>
-                            </li>
-                            <li>
-                                <a href="404.html">404</a>
-                            </li>
-                            <li>
-                                <a href="503.html">503</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">blog</a>
-                        <ul class="submenu">
-                            <li>
-                                <a href="blog.html">Blog</a>
-                            </li>
-                            <li>
-                                <a href="blog-details.html">Blog Single</a>
-                            </li>
-                        </ul>
-                    </li> -->
                     <li class="separator">
                         <span>|</span>
                     </li>
-                    <!-- <li>
-                        <div class="serch-icon">
-                            <i class="fas fa-search"></i>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="language-select">
-                            <select class="select-bar">
-                                <option value="">EN</option>
-                                <option value="">IN</option>
-                                <option value="">BN</option>
-                            </select>
-                        </div>
-                    </li> -->
                     <li class="user-profile">
                         <a href="#">
                             @auth
                             <img style="width: 40px; height: 40px; border-radius: 100%;" src="{{asset('uploads/' . (Auth::user()->profile_image ?? 'avatar.jpg'))}}" alt="">
                             @else
-                            <img style="width: 40px; height: 40px; border-radius: 100%;" src="assets/images/user-demo.png" alt="">
+                            <img style="width: 40px; height: 40px; border-radius: 100%;" src="./../assets/images/user-demo.png" alt="">
                             @endauth
                         </a>
                         <ul class="submenu">
@@ -209,9 +145,9 @@
 
     <!-- ==========Newslater-Section========== -->
     <footer class="footer-section">
-        <img class="shape1" src="assets/images/footer/f-shape.png" alt="">
-        <img class="shape2" src="assets/images/footer/flower01.png" alt="">
-        <img class="shape3" src="assets/images/footer/right-shape.png" alt="">
+        <img class="shape1" src="./../assets/images/footer/f-shape.png" alt="">
+        <img class="shape2" src="./../assets/images/footer/flower01.png" alt="">
+        <img class="shape3" src="./../assets/images/footer/right-shape.png" alt="">
         <div class="newslater-section">
             <div class="container">
                 <div class="row justify-content-center">
@@ -219,7 +155,7 @@
                         <div class="newslater-container">
                             <div class="newslater-wrapper">
                                 <div class="icon">
-                                    <img src="assets/images/footer/n-icon.png" alt="">
+                                    <img src="./../assets/images/footer/n-icon.png" alt="">
                                 </div>
                                 <p class="text">Sign up to recieve a monthly email on the latest news!</p>
                                 <form class="newslater-form">
@@ -427,19 +363,21 @@
 
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 
-    <script src="assets/js/plugins.js"></script>
+    <script src="./../assets/js/plugins.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="assets/js/heandline.js"></script>
-    <script src="assets/js/isotope.pkgd.min.js"></script>
-    <script src="assets/js/magnific-popup.min.js"></script>
-    <script src="assets/js/owl.carousel.min.js"></script>
-    <script src="assets/js/wow.min.js"></script>
-    <script src="assets/js/countdown.min.js"></script>
-    <script src="assets/js/odometer.min.js"></script>
-    <script src="assets/js/viewport.jquery.js"></script>
-    <script src="assets/js/nice-select.js"></script>
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/modernizr-3.6.0.min.js"></script>
+    <script src="./../assets/js/heandline.js"></script>
+    <script src="./../assets/js/isotope.pkgd.min.js"></script>
+    <script src="./../assets/js/magnific-popup.min.js"></script>
+    <script src="./../assets/js/owl.carousel.min.js"></script>
+    <script src="./../assets/js/wow.min.js"></script>
+    <script src="./../assets/js/countdown.min.js"></script>
+    <script src="./../assets/js/odometer.min.js"></script>
+    <script src="./../assets/js/viewport.jquery.js"></script>
+    <script src="./../assets/js/nice-select.js"></script>
+    <script src="./../assets/js/main.js"></script>
+    <script src="./../assets/js/modernizr-3.6.0.min.js"></script>
+
+
 
 </body>
 

@@ -21,6 +21,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/check', function () {
+    return view('welcome2');
+});
+
+
 
 Auth::routes(['verify' => true]);
 
@@ -41,21 +46,25 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/membersLatestActive', [App\Http\Controllers\MembersController::class, 'sortActive'])->name('membersLatestActive');
     Route::get('/membersNew', [App\Http\Controllers\MembersController::class, 'sortNew'])->name('membersNew');
     Route::get('/search', [App\Http\Controllers\MembersController::class, 'search'])->name('search');
-    Route::post('sendChat', [App\Http\Controllers\ChatController::class, 'sendChat'])->name('sendChat');
+    Route::post('save-chat', [App\Http\Controllers\ChatController::class, 'saveChat']);
+
+
     
+    Route::get('/chat/{username}', [App\Http\Controllers\ChatController::class, 'index']);
     Route::get('/member/{username}', [App\Http\Controllers\MembersController::class, 'getMember'])->name('user.getMember');
 
 
-    Route::get('get-user-chat-contacts/{userid}', [App\Http\Controllers\ChatController::class, 'getUserChatContacts'])->name('get-user-chat-contacts');
+    Route::get('get-user-chat-contacts/{userid}/{extraid}', [App\Http\Controllers\ChatController::class, 'getUserChatContacts'])->name('get-user-chat-contacts');
     Route::get('/get-chat-messages/{authUserId}/{extraId}', [ChatController::class, 'getChatMessages']);
+    Route::get('/countTotal/{authUserId}/{extraId}', [ChatController::class, 'countTotal']);
 
 });
 
 
 
 Route::prefix('admin')->group(function () {
-    Route::get('', [AdminController::class, 'showLoginForm'])->name('admin.login');
-    Route::get('login', [AdminController::class, 'showLoginForm'])->name('admin.login');
+    Route::get('', [AdminController::class, 'showLoginForm']);
+    Route::get('login', [AdminController::class, 'showLoginForm']);
     Route::middleware(['guest:admin'])->group(function () {
         // These routes are only accessible for non-authenticated users (guests)
         Route::post('login', [AdminController::class, 'login'])->name('admin.login');

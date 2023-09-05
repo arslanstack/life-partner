@@ -34,6 +34,7 @@ $userdata = ProfileData(Auth::id());
 </head>
 
 <body>
+{{changeStatus(Auth::id())}}
     <!-- ==========Preloader========== -->
     <div class="preloader">
         <div class="preloader-inner">

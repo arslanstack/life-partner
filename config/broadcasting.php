@@ -42,10 +42,10 @@ return [
                     CURLOPT_SSL_VERIFYHOST => 0,
                     CURLOPT_SSL_VERIFYPEER => 0,
                 ],
-                'host' => env('LARAVEL_WEBSOCKETS_HOST'),
-                'port' => env('LARAVEL_WEBSOCKETS_PORT'),
-                'scheme' => 'http',
-
+                'encryption' => false,
+                'port' => env('VITE_PUSHER_PORT', 6001),
+                'host' => env('VITE_PUSHER_HOST'),
+                'scheme' => 'http'
             ],
             'client_options' => [
                 // Guzzle client options: https://docs.guzzlephp.org/en/stable/request-options.html
