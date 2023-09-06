@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Chat;
+use App\Models\chatContact;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Events\MessageEvent;
@@ -17,6 +18,7 @@ class ChatController extends Controller
         $chatCount = null;
         $chatMessages = null;
         if ($username == 0) {
+
             $chats = User::whereHas('sentChats', function ($query) use ($user) {
                 $query->where('receiver_id', Auth::user()->id);
             })
@@ -25,6 +27,8 @@ class ChatController extends Controller
                 })
                 ->get();
             return view('user.chat', compact(['chats', 'chatee', 'chatCount', 'chatMessages']));
+
+            
         } else {
             // $chatee = user where username = $username 
             $chatee = User::where('username', '=', $username)->firstOrFail();
@@ -64,10 +68,27 @@ class ChatController extends Controller
     public function saveChat(Request $request)
     {
         try {
+            // fetch chatContact where sender_id = Auth::user()->id and receiver_id = $request->receiver_id
+            $chatContact = chatContact::where('sender_id', Auth::user()->id)
+                ->where('receiver_id', $request->receiver_id)
+                ->first();
+            // if chatContact is null
+            if ($chatContact == null) {
+                // create chatContact
+                $chatContact = chatContact::create([
+                    'sender_id' => Auth::user()->id,
+                    'receiver_id' => $request->receiver_id,
+                ]);
+            }
+            else{
+                $chatContact->touch();
+            }
+            // create chat
             $chat = Chat::create([
+                'chat_contact_id' => $chatContact->id,
                 'sender_id' => Auth::user()->id,
                 'receiver_id' => $request->receiver_id,
-                'message' => $request->message
+                'message' => $request->message,
             ]);
             $chatCount = totalChatCount(Auth::user()->id, $request->receiver_id);
             // push chatCount to $chat

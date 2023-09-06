@@ -262,7 +262,7 @@
         console.log("Echo is being loaded now...");
         Echo.join('status-update')
             .here((users) => {
-                console.log("send end: " + send_end);
+                console.log("users: " + users);
                 for (var x = 0; x < users.length; x++) {
                     // console.log(users[x].id);
                     changeStatus(users[x].id, 'online');

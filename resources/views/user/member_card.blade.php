@@ -20,7 +20,7 @@
             </a>
         </div>
         <div class="box-footer">
-            <a onclick="populateChat('{{$user->id}}','{{$user->profile_image}}','{{$user->first_name}}','{{$user->last_name}}')" class="btn btn-sm btn-primary bg-grad">Message</a>
+            <a href="chat/{{$user->username}}" class="btn btn-sm btn-primary bg-grad">Message</a>
             <a href="member/like/{{$user->username}}" class="btn btn-sm btn-success bg-grad2">Like Profile</a>
             <a href="member/report/{{$user->username}}" class="btn btn-sm btn-danger">Report Profile</a>
         </div>
