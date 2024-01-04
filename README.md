@@ -1,6 +1,6 @@
 # Laravel Dating and Social Media Application
 
-![Life-Partner](projects.arslanstack.com/photos/lifepartner/1.png)
+![Life-Partner](https://projects.arslanstack.com/photos/lifepartner/1.png)
 
 ## Project Overview
 
@@ -20,12 +20,12 @@ Welcome to a feature-rich Laravel-based dating and social media application desi
 
 Explore snapshots from the project:
 
-![Life-Partner](projects.arslanstack.com/photos/lifepartner/2.png)
-![Life-Partner](projects.arslanstack.com/photos/lifepartner/3.png)
-![Life-Partner](projects.arslanstack.com/photos/lifepartner/4.png)
-![Life-Partner](projects.arslanstack.com/photos/lifepartner/5.png)
-![Life-Partner](projects.arslanstack.com/photos/lifepartner/6.png)
-![Life-Partner](projects.arslanstack.com/photos/lifepartner/7.png)
+![Life-Partner](https://projects.arslanstack.com/photos/lifepartner/2.png)
+![Life-Partner](https://projects.arslanstack.com/photos/lifepartner/3.png)
+![Life-Partner](https://projects.arslanstack.com/photos/lifepartner/4.png)
+![Life-Partner](https://projects.arslanstack.com/photos/lifepartner/5.png)
+![Life-Partner](https://projects.arslanstack.com/photos/lifepartner/6.png)
+![Life-Partner](https://projects.arslanstack.com/photos/lifepartner/7.png)
 
 ## Credentials
 
